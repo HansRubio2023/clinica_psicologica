@@ -33,7 +33,7 @@
                         <h2 class="fw-bold text-primary mb-2">
                             <i class="fas fa-user-edit"></i> Editar Paciente
                         </h2>
-                        <p class="text-muted">hans</p>
+                        <p class="text-muted">Complete todos los campos requeridos</p>
                     </div>
 
                     <!-- FORMULARIO -->
