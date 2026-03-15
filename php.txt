@@ -1,0 +1,308 @@
+PHP MOSTRAR LISTADO DE PACIENTES
+
+<?php
+// Conexión a la base de datos
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "hospital"; // Cambia por tu BD
+
+try {
+    $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch(PDOException $e) {
+    die("Error de conexión: " . $e->getMessage());
+}
+
+// Consulta para obtener TODOS los pacientes
+$stmt = $pdo->query("SELECT * FROM pacientes ORDER BY apellido, nombre");
+$pacientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+?>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Pacientes</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; }
+        .table-container { background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); }
+        .btn-sm { font-size: 0.8rem; }
+        .status-active { color: #28a745; }
+        .status-inactive { color: #dc3545; }
+    </style>
+</head>
+<body>
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <div class="card shadow-lg border-0 menu-card">
+                    <div class="card-header bg-primary text-white text-center py-4">
+                        <h2><i class="fas fa-users"></i> Lista de Pacientes</h2>
+                        <p class="mb-0">Total: <?php echo count($pacientes); ?> pacientes</p>
+                    </div>
+                    
+                    <div class="card-body p-0">
+                        <?php if (empty($pacientes)): ?>
+                            <div class="text-center py-5">
+                                <i class="fas fa-user-slash fa-3x text-muted mb-3"></i>
+                                <h4>No hay pacientes registrados</h4>
+                            </div>
+                        <?php else: ?>
+                            <div class="table-responsive">
+                                <table class="table table-hover mb-0">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th><i class="fas fa-hashtag"></i> ID</th>
+                                            <th><i class="fas fa-user"></i> Paciente</th>
+                                            <th><i class="fas fa-id-card"></i> DNI</th>
+                                            <th><i class="fas fa-phone"></i> Teléfono</th>
+                                            <th><i class="fas fa-envelope"></i> Email</th>
+                                            <th><i class="fas fa-calendar"></i> Creado</th>
+                                            <th><i class="fas fa-cogs"></i> Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php foreach ($pacientes as $paciente): ?>
+                                            <tr>
+                                                <td><strong><?php echo $paciente['id']; ?></strong></td>
+                                                <td>
+                                                    <strong><?php echo htmlspecialchars($paciente['nombre'] . ' ' . $paciente['apellido']); ?></strong>
+                                                </td>
+                                                <td><?php echo htmlspecialchars($paciente['dni']); ?></td>
+                                                <td><?php echo htmlspecialchars($paciente['telefono']); ?></td>
+                                                <td><?php echo htmlspecialchars($paciente['email']); ?></td>
+                                                <td><?php echo date('d/m/Y', strtotime($paciente['created_at'])); ?></td>
+                                                <td>
+                                                    <a href="ver_paciente.php?id=<?php echo $paciente['id']; ?>" class="btn btn-info btn-sm">
+                                                        <i class="fas fa-eye"></i>
+                                                    </a>
+                                                    <a href="editar_paciente.php?id=<?php echo $paciente['id']; ?>" class="btn btn-warning btn-sm">
+                                                        <i class="fas fa-edit"></i>
+                                                    </a>
+                                                    <a href="eliminar_paciente.php?id=<?php echo $paciente['id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('¿Eliminar este paciente?')">
+                                                        <i class="fas fa-trash"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                    
+                    <div class="card-footer bg-light text-center">
+                        <a href="nuevo_paciente.php" class="btn btn-success btn-lg">
+                            <i class="fas fa-plus"></i> Nuevo Paciente
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+//Conexión para obtener los datos de la base de datos config.php
+<?php
+$host = 'localhost';
+$db = 'hospital';
+$user = 'root';
+$pass = '';
+
+try {
+    $pdo = new PDO("mysql:host=$host;dbname=$db", $user, $pass);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch(PDOException $e) {
+    die("Error: " . $e->getMessage());
+}
+?>
+
+
+formulario agregar pacientes
+
+<?php
+// Incluir configuración de BD
+include 'config.php';
+
+$mensaje = '';
+$tipo_mensaje = '';
+
+if ($_POST) {
+    // Recibir datos del formulario
+    $nombre = trim($_POST['nombre']);
+    $apellido = trim($_POST['apellido']);
+    $dni = trim($_POST['dni']);
+    $telefono = trim($_POST['telefono']);
+    $email = trim($_POST['email']);
+    $fecha_nacimiento = $_POST['fecha_nacimiento'];
+    
+    // Validaciones
+    $errores = [];
+    if (empty($nombre) || empty($apellido)) {
+        $errores[] = "Nombre y apellido son obligatorios";
+    }
+    if (!empty($email) && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $errores[] = "Email inválido";
+    }
+    
+    if (empty($errores)) {
+        try {
+            // Insertar paciente
+            $sql = "INSERT INTO pacientes (nombre, apellido, dni, telefono, email, fecha_nacimiento) 
+                    VALUES (?, ?, ?, ?, ?, ?)";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute([$nombre, $apellido, $dni, $telefono, $email, $fecha_nacimiento]);
+            
+            $mensaje = "¡Paciente agregado exitosamente! ID: " . $pdo->lastInsertId();
+            $tipo_mensaje = 'success';
+        } catch(PDOException $e) {
+            $mensaje = "Error: " . $e->getMessage();
+            $tipo_mensaje = 'danger';
+        }
+    } else {
+        $mensaje = implode('<br>', $errores);
+        $tipo_mensaje = 'warning';
+    }
+}
+?>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuevo Paciente</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            min-height: 100vh; 
+        }
+        .form-card { 
+            background: rgba(255,255,255,0.95); 
+            backdrop-filter: blur(15px); 
+        }
+        .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 0 0.2rem rgba(0,123,255,0.25);
+        }
+    </style>
+</head>
+<body class="d-flex align-items-center min-vh-100">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-xl-6">
+                <div class="card shadow-lg border-0 form-card p-4 p-lg-5">
+                    <!-- Mensaje -->
+                    <?php if ($mensaje): ?>
+                        <div class="alert alert-<?php echo $tipo_mensaje; ?> alert-dismissible fade show" role="alert">
+                            <?php echo $mensaje; ?>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    <?php endif; ?>
+
+                    <!-- Título -->
+                    <div class="text-center mb-4">
+                        <h2 class="fw-bold text-primary mb-2">
+                            <i class="fas fa-user-plus"></i> Nuevo Paciente
+                        </h2>
+                        <p class="text-muted">Complete todos los campos requeridos</p>
+                    </div>
+
+                    <!-- FORMULARIO -->
+                    <form method="POST" id="formPaciente">
+                        <div class="row">
+                            <!-- Nombre -->
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">
+                                    <i class="fas fa-user text-primary"></i> Nombre *
+                                </label>
+                                <input type="text" class="form-control" name="nombre" 
+                                       value="<?php echo isset($_POST['nombre']) ? $_POST['nombre'] : ''; ?>"
+                                       placeholder="Juan" maxlength="50" required>
+                            </div>
+
+                            <!-- Apellido -->
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">
+                                    <i class="fas fa-user-tag text-primary"></i> Apellido *
+                                </label>
+                                <input type="text" class="form-control" name="apellido" 
+                                       value="<?php echo isset($_POST['apellido']) ? $_POST['apellido'] : ''; ?>"
+                                       placeholder="Pérez" maxlength="50" required>
+                            </div>
+
+                            <!-- DNI -->
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">
+                                    <i class="fas fa-id-card text-primary"></i> DNI
+                                </label>
+                                <input type="text" class="form-control" name="dni" 
+                                       value="<?php echo isset($_POST['dni']) ? $_POST['dni'] : ''; ?>"
+                                       placeholder="12345678" maxlength="20">
+                            </div>
+
+                            <!-- Teléfono -->
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">
+                                    <i class="fas fa-phone text-primary"></i> Teléfono
+                                </label>
+                                <input type="tel" class="form-control" name="telefono" 
+                                       value="<?php echo isset($_POST['telefono']) ? $_POST['telefono'] : ''; ?>"
+                                       placeholder="987654321" maxlength="15">
+                            </div>
+
+                            <!-- Email -->
+                            <div class="col-12 mb-3">
+                                <label class="form-label">
+                                    <i class="fas fa-envelope text-primary"></i> Email
+                                </label>
+                                <input type="email" class="form-control" name="email" 
+                                       value="<?php echo isset($_POST['email']) ? $_POST['email'] : ''; ?>"
+                                       placeholder="paciente@email.com">
+                            </div>
+
+                            <!-- Fecha Nacimiento -->
+                            <div class="col-12 mb-4">
+                                <label class="form-label">
+                                    <i class="fas fa-calendar-alt text-primary"></i> Fecha de Nacimiento
+                                </label>
+                                <input type="date" class="form-control" name="fecha_nacimiento" 
+                                       value="<?php echo isset($_POST['fecha_nacimiento']) ? $_POST['fecha_nacimiento'] : ''; ?>">
+                            </div>
+                        </div>
+
+                        <!-- BOTONES -->
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-between">
+                            <a href="lista_pacientes.php" class="btn btn-secondary btn-lg">
+                                <i class="fas fa-arrow-left"></i> Cancelar
+                            </a>
+                            <button type="submit" class="btn btn-primary btn-lg px-4">
+                                <i class="fas fa-save"></i> Guardar Paciente
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Máscara para teléfono
+        document.querySelector('input[name="telefono"]').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '').slice(0, 15);
+            e.target.value = value;
+        });
+    </script>
+</body>
+</html>
