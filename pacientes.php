@@ -112,7 +112,7 @@ $query = mysqli_query($con, $sql);
                         <td><?=$row['nombre_rango']?></td>
                         <th><?=$row['usuario']?></th>
                             <td>
-                                <a href="editar_paciente.php?id=<?= $row['rut']?>" class="btn btn-warning btn-sm me-1">
+                                <a href="editar_paciente.php?id_paciente=<?php echo $row['id_paciente']; ?>" class="btn btn-warning btn-sm me-1">
                                     <i class="fas fa-edit"></i>
                                 </a>
                                 <a href="#" class="btn btn-danger btn-sm eliminar-btn me-1" 
