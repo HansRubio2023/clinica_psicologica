@@ -22,7 +22,7 @@ function connection()
     return $connect;   
 };
 
-
+/*
 $mi_conexion = connection();
 if(!$mi_conexion)
 {
@@ -34,5 +34,5 @@ if(!$mi_conexion)
 
 echo "<h3>Mostrando resultado de la conexión:</h3> 
 <h2>Conexión exitosa</h2>";
-
+*/
 ?>

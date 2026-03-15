@@ -1,3 +1,14 @@
+<?php
+include("../clinica_psicologica/conexion/conexion.php");
+$con = connection();
+$sql = "SELECT p.*, e.tipo_estado AS nombre_estado, 
+        r.nombre_rango_etareo AS nombre_rango 
+        FROM pacientes p
+        INNER JOIN tipo_estado e ON p.id_estado = e.id_estado
+        INNER JOIN tipo_rango_etareo r ON p.id_rango_etareo = r.id_rango_etareo ";
+$query = mysqli_query($con, $sql);
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -61,7 +72,7 @@
                     </div>
                 </div>
                 <div class="col-md-4 text-end">
-                    <a href="nuevo_paciente.php" class="btn btn-success btn-lg">
+                    <a href="../clinica_psicologica/nuevo_paciente.php" class="btn btn-success btn-lg">
                         <i class="fas fa-plus"></i> Nuevo Paciente
                     </a>
                 </div>
@@ -74,7 +85,6 @@
                 <table class="table table-striped table-hover">
                     <thead class="table-dark">
                         <tr>
-                            <th>Cantidad</th>
                             <th>RUT</th>
                             <th>Nombres</th>
                             <th>Apellidos</th>
@@ -82,27 +92,27 @@
                             <th>Celular</th>
                             <th>Comentarios</th>
                             <th>Fecha Registro</th>
-                            <th>Usuario Registro</th>
                             <th>Tipo Estado</th>
-                            <th>Rango</th>
+                            <th>Rango de edad</th>
+                            <th>Usuario Registro</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="paciente-row">
-                            <td>1</td>
-                            <td>12.345.678-9</td>
-                            <td>Alonso Ignacio</td>
-                            <td>Pérez Díaz</td>
-                            <td>alonso@gmail.com</td>
-                            <td>912345678</td>
-                            <td>Paciente en buen estado</td>
-                            <td>14-03-2026</td>
-                            <td>admin</td>
-                            <td>Alta Terapéutica</td>
-                            <td>Niño</td>
+                    <?php while($row = mysqli_fetch_array($query)): ?>
+                    <tr>
+                        <th><?=$row['rut']?></th>
+                        <th><?=$row['nombres']?></th>
+                        <th><?=$row['apellidos']?></th>
+                        <th><?=$row['email']?></th>
+                        <th><?=$row['celular']?></th>
+                        <th><?=$row['comentarios']?></th>
+                        <th><?=$row['fecha_registro']?></th>
+                        <td><span class="badge bg-info text-dark"><?=$row['nombre_estado']?></span></td>
+                        <td><?=$row['nombre_rango']?></td>
+                        <th><?=$row['usuario']?></th>
                             <td>
-                                <a href="editar_paciente.php?id=1" class="btn btn-warning btn-sm me-1">
+                                <a href="editar_paciente.php?id=<?= $row['rut']?>" class="btn btn-warning btn-sm me-1">
                                     <i class="fas fa-edit"></i>
                                 </a>
                                 <a href="#" class="btn btn-danger btn-sm eliminar-btn me-1" 
@@ -110,73 +120,7 @@
                                     <i class="fas fa-trash"></i>
                                 </a>
                             </td>
-                        </tr>
-                        <tr class="paciente-row">
-                            <td>2</td>
-                            <td>16.345.678-9</td>
-                            <td>Hans Ignacio</td>
-                            <td>Pérez Díaz</td>
-                            <td>hans@gmail.com</td>
-                            <td>923456789</td>
-                            <td>Control post operatorio</td>
-                            <td>15-03-2026</td>
-                            <td>doctor1</td>
-                            <td>En observación</td>
-                            <td>Adulto</td>
-                            <td>
-                                <a href="editar_paciente.php?id=2" class="btn btn-warning btn-sm me-1">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <a href="#" class="btn btn-danger btn-sm eliminar-btn me-1" 
-                                   data-id="2" data-nombre="Hans Ignacio Pérez Díaz">
-                                    <i class="fas fa-trash"></i>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr class="paciente-row">
-                            <td>2</td>
-                            <td>16.345.678-9</td>
-                            <td>Hans Ignacio</td>
-                            <td>Pérez Díaz</td>
-                            <td>hans@gmail.com</td>
-                            <td>923456789</td>
-                            <td>Control post operatorio</td>
-                            <td>15-03-2026</td>
-                            <td>doctor1</td>
-                            <td>En observación</td>
-                            <td>Adulto</td>
-                            <td>
-                                <a href="editar_paciente.php?id=2" class="btn btn-warning btn-sm me-1">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <a href="#" class="btn btn-danger btn-sm eliminar-btn me-1" 
-                                   data-id="2" data-nombre="Hans Ignacio Pérez Díaz">
-                                    <i class="fas fa-trash"></i>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr class="paciente-row">
-                            <td>2</td>
-                            <td>16.345.678-9</td>
-                            <td>Hans Ignacio</td>
-                            <td>Pérez Díaz</td>
-                            <td>hans@gmail.com</td>
-                            <td>923456789</td>
-                            <td>Control post operatorio</td>
-                            <td>15-03-2026</td>
-                            <td>doctor1</td>
-                            <td>En observación</td>
-                            <td>Adulto</td>
-                            <td>
-                                <a href="editar_paciente.php?id=2" class="btn btn-warning btn-sm me-1">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <a href="#" class="btn btn-danger btn-sm eliminar-btn me-1" 
-                                   data-id="2" data-nombre="Hans Ignacio Pérez Díaz">
-                                    <i class="fas fa-trash"></i>
-                                </a>
-                            </td>
-                        </tr>
+                            </tr> <?php endwhile; ?> </tbody>
                     </tbody>
                 </table>
             </div>

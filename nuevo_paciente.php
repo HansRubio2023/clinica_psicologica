@@ -1,3 +1,12 @@
+<?php
+include("../clinica_psicologica/conexion/conexion.php");
+
+$con = connection();
+
+$sql = "SELECT * FROM pacientes";
+$query = mysqli_query($con, $sql);
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -12,6 +21,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+    <form action="insert_paciente.php" method="POST">
    <div class="menu-container">
             <a id="inicio" href="menu.php" class="btn btn-inicio menu-btn">
                 <i class="fas fa-home btn-icon"></i>
@@ -57,9 +67,8 @@
                                 <label class="form-label fw-bold">
                                     <i class="fas fa-user text-primary"></i> Nombres *
                                 </label>
-                                <input type="text" class="form-control" name="nombre" 
-                                       value="<?php echo isset($_POST['nombre']) ? $_POST['nombre'] : ''; ?>"
-                                       placeholder="Juan" maxlength="50" required>
+                                <input type="text" class="form-control" name="nombres" 
+                                       placeholder="Marcos Andrés" maxlength="50" required>
                             </div>
 
                             <!-- Apellido -->
@@ -67,18 +76,18 @@
                                 <label class="form-label fw-bold">
                                     <i class="fas fa-user-tag text-primary"></i> Apellidos *
                                 </label>
-                                <input type="text" class="form-control" name="apellido" 
-                                       value="<?php echo isset($_POST['apellido']) ? $_POST['apellido'] : ''; ?>"
+                                <input type="text" class="form-control" name="apellidos" 
+                                       value="<?php echo isset($_POST['apellidos']) ? $_POST['apellidos'] : ''; ?>"
                                        placeholder="Pérez" maxlength="50" required>
                             </div>
 
                             <!-- Teléfono -->
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">
-                                    <i class="fas fa-phone text-primary"></i> Teléfono
+                                    <i class="fas fa-phone text-primary"></i> Celular
                                 </label>
-                                <input type="tel" class="form-control" name="telefono" 
-                                       value="<?php echo isset($_POST['telefono']) ? $_POST['telefono'] : ''; ?>"
+                                <input type="tel" class="form-control" name="celular" 
+                                       value="<?php echo isset($_POST['celular']) ? $_POST['celular'] : ''; ?>"
                                        placeholder="987654321" maxlength="15">
                             </div>
 
@@ -106,7 +115,7 @@
                             <label class="textarea-label">
                                 <i class="fas fa-file-medical text-primary"></i> Comentarios</label>
                             <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
-                            value="<?php echo isset($_POST['comentario']) ? $_POST['comentario'] : ''; ?>"
+                            value="<?php echo isset($_POST['comentarios']) ? $_POST['comentarios'] : ''; ?>"
                             maxlength="1000"    ></textarea>
                             <div class="textarea-counter">
                                 <span id="contador2">0</span>/1000 caracteres
@@ -131,6 +140,31 @@
                             });
                         </script>
 
+                        <!-- Rango Etario -->
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">
+                                    <i class="fas fa-users text-primary"></i> Rango Etario  
+                                </label>
+                                <select class="form-select" name="id_rango_etario">
+                                    <option value="">Seleccione un rango etario</option>
+                                    <option value="1" <?php echo (isset($_POST['id_rango_etario']) && $_POST['id_rango_etario'] == '1') ? 'selected' : ''; ?>>Niño</option>
+                                    <option value="2" <?php echo (isset($_POST['id_rango_etario']) && $_POST['id_rango_etario'] == '2') ? 'selected' : ''; ?>>Adulto</option>
+                                    <option value="3" <?php echo (isset($_POST['id_rango_etario']) && $_POST['id_rango_etario'] == '3') ? 'selected' : ''; ?>>Adolescente</option>
+                                </select>
+                            </div>
+    
+                        <!-- Estado -->
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label
+">
+                                    <i class="fas fa-toggle-on text-primary"></i> Estado
+                                </label>
+                                <select class="form-select" name="id_estado">
+                                    <option value="">Seleccione un estado</option>
+                                    <option value="1" <?php echo (isset($_POST['id_estado']) && $_POST['id_estado'] == '1') ? 'selected' : ''; ?>>Activo</option>
+                                    <option value="2" <?php echo (isset($_POST['id_estado']) && $_POST['id_estado'] == '2') ? 'selected' : ''; ?>>Inactivo</option>
+                                </select>
+                            </div>  
                         <!-- Usuario -->
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">
