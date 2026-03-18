@@ -5,7 +5,8 @@ $sql = "SELECT p.*, e.tipo_estado AS nombre_estado,
         r.nombre_rango_etareo AS nombre_rango 
         FROM pacientes p
         INNER JOIN tipo_estado e ON p.id_estado = e.id_estado
-        INNER JOIN tipo_rango_etareo r ON p.id_rango_etareo = r.id_rango_etareo ";
+        INNER JOIN tipo_rango_etareo r ON p.id_rango_etareo = r.id_rango_etareo 
+        order by p.id_paciente DESC";
 $query = mysqli_query($con, $sql);
 ?>
 
@@ -62,10 +63,10 @@ $query = mysqli_query($con, $sql);
                             <i class="fas fa-search text-primary"></i>
                         </span>
                         <input type="text" 
-                               class="form-control border-start-0 ps-0 shadow-none" 
-                               id="buscador" 
-                               placeholder="Buscar por RUT, nombre, correo..."
-                               autocomplete="off">
+                        class="form-control border-start-0 ps-0 shadow-none" 
+                        id="buscador" 
+                        placeholder="Buscar por RUT, nombre, correo..."
+                        autocomplete="off">
                         <button class="btn btn-outline-danger" type="button" id="btn-limpiar" style="display: none;">
                             <i class="fas fa-times"></i> Limpiar
                         </button>
@@ -81,52 +82,52 @@ $query = mysqli_query($con, $sql);
         
         <!-- TABLA -->
         <div class="card-body p-4">
-            <div class="table-responsive">
-                <table class="table table-striped table-hover">
-                    <thead class="table-dark">
-                        <tr>
-                            <th>RUT</th>
-                            <th>Nombres</th>
-                            <th>Apellidos</th>
-                            <th>Correo</th>
-                            <th>Celular</th>
-                            <th>Comentarios</th>
-                            <th>Fecha Registro</th>
-                            <th>Tipo Estado</th>
-                            <th>Rango de edad</th>
-                            <th>Usuario Registro</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    <?php while($row = mysqli_fetch_array($query)): ?>
-                    <tr>
-                        <th><?=$row['rut']?></th>
-                        <th><?=$row['nombres']?></th>
-                        <th><?=$row['apellidos']?></th>
-                        <th><?=$row['email']?></th>
-                        <th><?=$row['celular']?></th>
-                        <th><?=$row['comentarios']?></th>
-                        <th><?=$row['fecha_registro']?></th>
-                        <td><span class="badge bg-info text-dark"><?=$row['nombre_estado']?></span></td>
-                        <td><?=$row['nombre_rango']?></td>
-                        <th><?=$row['usuario']?></th>
-                            <td>
-                                <a href="editar_paciente.php?id_paciente=<?php echo $row['id_paciente']; ?>" class="btn btn-warning btn-sm me-1">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <a href="#" class="btn btn-danger btn-sm eliminar-btn me-1" 
-                                   data-id="1" data-nombre="Alonso Ignacio Pérez Díaz">
-                                    <i class="fas fa-trash"></i>
-                                </a>
-                            </td>
-                            </tr> <?php endwhile; ?> </tbody>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>RUT</th>
+                    <th>Nombres</th>
+                    <th>Apellidos</th>
+                    <th>Correo</th>
+                    <th>Celular</th>
+                    <th>Comentarios</th>
+                    <th>Fecha Registro</th>
+                    <th>Estado</th>
+                    <th>Rango de edad</th>
+                    <th>Usuario Registro</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php while($row = mysqli_fetch_array($query)): ?>
+                <tr class="paciente-row">
+                    <td><?=$row['rut']?></td>
+                    <td><?=$row['nombres']?></td>
+                    <td><?=$row['apellidos']?></td>
+                    <td><?=$row['email']?></td>
+                    <td><?=$row['celular']?></td>
+                    <td><?=$row['comentarios']?></td>
+                    <td><?=$row['fecha_registro']?></td>
+                    <td><span class="badge bg-info text-dark"><?=$row['nombre_estado']?></span></td>
+                    <td><?=$row['nombre_rango']?></td>
+                    <td><?=$row['usuario']?></td>
+                    <td>
+                        <a href="editar_paciente.php?id_paciente=<?php echo $row['id_paciente']; ?>" 
+                        class="btn btn-warning btn-sm me-1">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <a class="btn btn-danger btn-sm me-1" href="eliminar_paciente.php?id_paciente=<?= $row['id_paciente']?>" 
+                        onclick="return confirm('¿Estás seguro de que deseas eliminar este registro?');">
+                        <i class="fas fa-trash"></i>
+                        </a>                        
+                    </td>
+                </tr> 
+                <?php endwhile; ?> 
+            </tbody>
+        </table>
     </div>
-
+</div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     
     <script>
@@ -166,17 +167,23 @@ $query = mysqli_query($con, $sql);
             buscador.focus();
         });
         
-        // ELIMINAR 
-        document.querySelectorAll('.eliminar-btn').forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                e.preventDefault();
-                const nombre = this.dataset.nombre;
-                if (confirm(`¿Eliminar a "${nombre}"?`)) {
-                    // Aquí tu lógica de eliminación
-                    alert('Paciente eliminado (simulación)');
-                }
-            });
-        });
+        // ===== LÓGICA PARA ELIMINAR =====
+        document.addEventListener('click', function(e) {
+        // Detectamos si el clic fue en el botón de eliminar o en el icono de la basura
+        const botonEliminar = e.target.closest('.eliminar-btn');
+        
+        if (botonEliminar) {
+        e.preventDefault();
+        
+        const id = botonEliminar.getAttribute('data-id');
+        const nombre = botonEliminar.getAttribute('data-nombre');
+        const rut = botonEliminar.getAttribute('data-rut'); // Capturar RUT
+
+        // Mensaje concatenado
+        if (confirm(`¿Estás seguro de que deseas eliminar al paciente?\nNombre: ${nombre}\nRUT: ${rut}`)) {
+            window.location.href = "eliminar_paciente.php?id=" + id;
+        }
+    }
     });
     </script>
 </body>

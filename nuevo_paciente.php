@@ -111,10 +111,11 @@ $query = mysqli_query($con, $sql);
                             </div>
                         </div>
                         
+                        <!-- Comentarios -->
                         <div class="mb-3">
                             <label class="textarea-label">
                                 <i class="fas fa-file-medical text-primary"></i> Comentarios</label>
-                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                            <textarea class="form-control" name="comentarios" rows="3"
                             value="<?php echo isset($_POST['comentarios']) ? $_POST['comentarios'] : ''; ?>"
                             maxlength="1000"    ></textarea>
                             <div class="textarea-counter">
@@ -145,11 +146,11 @@ $query = mysqli_query($con, $sql);
                                 <label class="form-label">
                                     <i class="fas fa-users text-primary"></i> Rango Etario  
                                 </label>
-                                <select class="form-select" name="id_rango_etario">
+                                <select class="form-select" name="id_rango_etareo">
                                     <option value="">Seleccione un rango etario</option>
-                                    <option value="1" <?php echo (isset($_POST['id_rango_etario']) && $_POST['id_rango_etario'] == '1') ? 'selected' : ''; ?>>Niño</option>
-                                    <option value="2" <?php echo (isset($_POST['id_rango_etario']) && $_POST['id_rango_etario'] == '2') ? 'selected' : ''; ?>>Adulto</option>
-                                    <option value="3" <?php echo (isset($_POST['id_rango_etario']) && $_POST['id_rango_etario'] == '3') ? 'selected' : ''; ?>>Adolescente</option>
+                                    <option value="1" <?php echo (isset($_POST['id_rango_etareo']) && $_POST['id_rango_etareo'] == '1') ? 'selected' : ''; ?>>Niño</option>
+                                    <option value="2" <?php echo (isset($_POST['id_rango_etareo']) && $_POST['id_rango_etareo'] == '2') ? 'selected' : ''; ?>>Adulto</option>
+                                    <option value="3" <?php echo (isset($_POST['id_rango_etareo']) && $_POST['id_rango_etareo'] == '3') ? 'selected' : ''; ?>>Adolescente</option>
                                 </select>
                             </div>
     
