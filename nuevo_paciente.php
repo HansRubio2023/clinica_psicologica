@@ -45,7 +45,6 @@ $query = mysqli_query($con, $sql);
                         </h2>
                         <p class="text-muted">Complete todos los campos requeridos</p>
                     </div>
-ADASAD
                     <!-- FORMULARIO -->
                     <form method="POST" id="formPaciente">
                         <div class="row">
