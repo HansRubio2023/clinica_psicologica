@@ -128,9 +128,9 @@ if (isset($_GET['id_paciente'])) {
                                 </label>
                                 <select class="form-select" name="id_rango_etareo">
                                     <option value="">Seleccione un rango etario</option>
-                                    <option value="1" <?php echo (isset($_POST['id_rango_etareo']) && $_POST['id_rango_etareo'] == '1') ? 'selected' : ''; ?>>Niño</option>
-                                    <option value="2" <?php echo (isset($_POST['id_rango_etareo']) && $_POST['id_rango_etareo'] == '2') ? 'selected' : ''; ?>>Adulto</option>
-                                    <option value="3" <?php echo (isset($_POST['id_rango_etareo']) && $_POST['id_rango_etareo'] == '3') ? 'selected' : ''; ?>>Adolescente</option>
+                                    <option value="1" <?php echo ($row['id_rango_etareo'] == '1') ? 'selected' : ''; ?>>Niño</option>
+                                    <option value="2" <?php echo ($row['id_rango_etareo'] == '2') ? 'selected' : ''; ?>>Adulto</option>
+                                    <option value="3" <?php echo ($row['id_rango_etareo'] == '3') ? 'selected' : ''; ?>>Adolescente</option>
                                 </select>
                             </div>
     
@@ -141,10 +141,10 @@ if (isset($_GET['id_paciente'])) {
                                 </label>
                                 <select class="form-select" name="id_estado">
                                     <option value="">Seleccione un estado</option>
-                                    <option value="1" <?php echo (isset($_POST['id_estado']) && $_POST['id_estado'] == '1') ? 'selected' : ''; ?>>En curso</option>
-                                    <option value="2" <?php echo (isset($_POST['id_estado']) && $_POST['id_estado'] == '2') ? 'selected' : ''; ?>>Derivado</option>
+                                    <option value="1" <?php echo ($row['id_estado'] == '1') ? 'selected' : ''; ?>>En curso</option>
+                                    <option value="2" <?php echo ($row['id_estado'] == '2') ? 'selected' : ''; ?>>Derivado</option>
                                 </select>
-                            </div>  
+                            </div> 
 
                         <script>
                             // Contador de caracteres

@@ -65,7 +65,7 @@ $query = mysqli_query($con, $sql);
                         <input type="text" 
                         class="form-control border-start-0 ps-0 shadow-none" 
                         id="buscador" 
-                        placeholder="Buscar por RUT, nombre, correo..."
+                        placeholder="Buscar por RUT, Nombre o Correo"
                         autocomplete="off">
                         <button class="btn btn-outline-danger" type="button" id="btn-limpiar" style="display: none;">
                             <i class="fas fa-times"></i> Limpiar
@@ -132,58 +132,44 @@ $query = mysqli_query($con, $sql);
     
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // ===== BUSCADOR AUTOMÁTICO =====
-        const buscador = document.getElementById('buscador');
-        const btnLimpiar = document.getElementById('btn-limpiar');
+    const buscador = document.getElementById('buscador');
+    const btnLimpiar = document.getElementById('btn-limpiar');
+
+    function buscarAutomatico() {
+        const termino = buscador.value.trim().toLowerCase();
+        // Buscamos las filas justo en el momento de escribir
         const filas = document.querySelectorAll('.paciente-row');
         
-        function buscarAutomatico() {
-            const termino = buscador.value.trim().toLowerCase();
+        filas.forEach(fila => {
+            // Obtenemos todo el texto de la fila (RUT, Nombre, Apellido, etc.)
+            const textoFila = fila.innerText.toLowerCase();
             
-            filas.forEach(fila => {
-                const textoFila = fila.textContent.toLowerCase();
-                if (termino === '' || textoFila.includes(termino)) {
-                    fila.style.display = ''; // Mostrar
-                } else {
-                    fila.style.display = 'none'; // Ocultar
-                }
-            });
-            
-            // Mostrar/ocultar botón limpiar
+            if (termino === '' || textoFila.includes(termino)) {
+                fila.style.setProperty('display', '', 'important'); 
+            } else {
+                fila.style.setProperty('display', 'none', 'important');
+            }
+        });
+        
+        // Mostrar/ocultar botón limpiar
+        if(btnLimpiar) {
             btnLimpiar.style.display = termino ? 'block' : 'none';
         }
-        
-        // BÚSQUEDA EN TIEMPO REAL
-        let timeout;
-        buscador.addEventListener('input', function() {
-            clearTimeout(timeout);
-            timeout = setTimeout(buscarAutomatico, 200); // 200ms debounce
-        });
-        
-        // Botón limpiar
-        btnLimpiar.addEventListener('click', function() {
-            buscador.value = '';
-            buscarAutomatico();
-            buscador.focus();
-        });
-        
-        // ===== LÓGICA PARA ELIMINAR =====
-        document.addEventListener('click', function(e) {
-        // Detectamos si el clic fue en el botón de eliminar o en el icono de la basura
-        const botonEliminar = e.target.closest('.eliminar-btn');
-        
-        if (botonEliminar) {
-        e.preventDefault();
-        
-        const id = botonEliminar.getAttribute('data-id');
-        const nombre = botonEliminar.getAttribute('data-nombre');
-        const rut = botonEliminar.getAttribute('data-rut'); // Capturar RUT
-
-        // Mensaje concatenado
-        if (confirm(`¿Estás seguro de que deseas eliminar al paciente?\nNombre: ${nombre}\nRUT: ${rut}`)) {
-            window.location.href = "eliminar_paciente.php?id=" + id;
-        }
     }
+
+        // BÚSQUEDA EN TIEMPO REAL
+        if (buscador) {
+            buscador.addEventListener('input', buscarAutomatico);
+        }
+
+        // BOTÓN LIMPIAR
+        if (btnLimpiar) {
+            btnLimpiar.addEventListener('click', function() {
+                buscador.value = '';
+                buscarAutomatico();
+                buscador.focus();
+            });
+        }
     });
     </script>
 </body>
