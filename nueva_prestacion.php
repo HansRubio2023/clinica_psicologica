@@ -3,7 +3,7 @@ include("../clinica_psicologica/conexion/conexion.php");
 
 $con = connection();
 
-$sql = "SELECT * FROM pacientes";
+$sql = "SELECT * FROM evaluaciones";
 $query = mysqli_query($con, $sql);
 ?>
 
@@ -12,7 +12,7 @@ $query = mysqli_query($con, $sql);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pacientes</title>
+    <title>Prestaciones</title>
     <link rel="stylesheet" href="css/nuevo_pacientes.css">
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -21,7 +21,7 @@ $query = mysqli_query($con, $sql);
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <form action="insert_paciente.php" method="POST">
+    <form action="insert_prestacion.php" method="POST">
    <div class="menu-container">
             <a id="inicio" href="menu.php" class="btn btn-inicio menu-btn">
                 <i class="fas fa-home btn-icon"></i>
@@ -41,15 +41,15 @@ $query = mysqli_query($con, $sql);
                     <!-- Título -->
                     <div class="text-center mb-4">
                         <h2 class="fw-bold text-primary mb-2">
-                            <i class="fas fa-user-plus"></i> Nuevo Paciente
+                            <i class="fas fa-plus"></i> Nueva Prestación
                         </h2>
                         <p class="text-muted">Complete todos los campos requeridos *</p>
                     </div>
                     <!-- FORMULARIO -->
-                    <form method="POST" id="formPaciente">
-                        <div class="row">
-                            <!-- ID Paciente (oculto) -->
-                            <input type="hidden" name="id_paciente" value="<?php echo isset($_POST['id_paciente']) ? $_POST['id_paciente'] : ''; ?>">   
+                    <form method="POST" id="formPrestacion">
+                        
+                            <!-- ID Prestacion (oculto) -->
+                            <input type="hidden" name="id_evaluacion" value="<?php echo isset($_POST['id_evaluacion']) ? $_POST['id_evaluacion'] : ''; ?>">   
                             
                             <!-- RUT -->
                             <div class="col-md-6 mb-3">
@@ -101,56 +101,29 @@ $query = mysqli_query($con, $sql);
                                 }
                             </script>
 
-                            <!-- Nombre -->
-                            <div class="col-md-6 mb-3">
+
+                            <!-- Tipo Atencion  -->
+                            <div class="col-9 mb-3">
                                 <label class="form-label fw-bold">
-                                    <i class="fas fa-user text-primary"></i> Nombres *
+                                    <i class="fas fa-users text-primary"></i> Tipo Atención *
                                 </label>
-                                <input type="text" class="form-control" name="nombres" 
-                                       placeholder="Marcos Andrés" maxlength="50" required>
+                                <select class="form-select" name="id_tipo_atencion" required>
+                                    <option value="1" <?php echo (isset($_POST['id_atencion']) && $_POST['id_atencion'] == '1') ? 'selected' : ''; ?>>Terapia individual</option>
+                                    <option value="2" <?php echo (isset($_POST['id_atencion']) && $_POST['id_atencion'] == '2') ? 'selected' : ''; ?>>Acompañamiento terapéutico</option>
+                                </select>
                             </div>
 
-                            <!-- Apellido -->
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label fw-bold">
-                                    <i class="fas fa-user-tag text-primary"></i> Apellidos *
-                                </label>
-                                <input type="text" class="form-control" name="apellidos" 
-                                       value="<?php echo isset($_POST['apellidos']) ? $_POST['apellidos'] : ''; ?>"
-                                       placeholder="Cuevas Rubio" maxlength="50" required>
-                            </div>
-
-                            <!-- Teléfono -->
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">
-                                    <i class="fas fa-phone text-primary"></i> Celular
-                                </label>
-                                <input type="tel" class="form-control" name="celular" 
-                                       value="<?php echo isset($_POST['celular']) ? $_POST['celular'] : ''; ?>"
-                                       placeholder="987654321" maxlength="15">
-                            </div>
-
-                            <!-- Email -->
+                            <!-- Derivación -->
                             <div class="col-12 mb-3">
-                                <label class="form-label">
-                                    <i class="fas fa-envelope text-primary"></i> Email
+                                <label class="form-label fw-bold">
+                                    <i class="fas fa-user-tag text-primary"></i> Derivación *
                                 </label>
-                                <input type="email" class="form-control" name="email" 
-                                       value="<?php echo isset($_POST['email']) ? $_POST['email'] : ''; ?>"
-                                       placeholder="paciente@email.com">
+                                <input type="text" class="form-control" name="derivacion" 
+                                        value="<?php echo isset($_POST['derivacion']) ? $_POST['derivacion'] : ''; ?>"
+                                        maxlength="200" required>
                             </div>
-
-                            <!-- Fecha Registro -->
-                            <div class="col-12 mb-4">
-                                <label class="form-label">
-                                    <i class="fas fa-calendar-alt text-primary"></i> Fecha de Registro
-                                </label>
-                                <input type="date" class="form-control" name="fecha_registro" 
-                                       value="<?php echo isset($_POST['fecha_registro']) ? $_POST['fecha_registro'] : ''; ?>">
-                            </div>
-                        </div>
                         
-                        <!-- Comentarios -->
+                            <!-- Comentarios -->
                         <div class="mb-3">
                             <label class="textarea-label">
                                 <i class="fas fa-file-medical text-primary"></i> Comentarios</label>
@@ -180,27 +153,23 @@ $query = mysqli_query($con, $sql);
                             });
                         </script>
 
-                        <!-- Rango Etario -->
-                            <div class="col-md-6 mb-3">
+                         <!-- Fecha Registro -->
+                            <div class="col-6 mb-4">
                                 <label class="form-label">
-                                    <i class="fas fa-users text-primary"></i> Rango Etario  
+                                    <i class="fas fa-calendar-alt text-primary"></i> Fecha de Registro
                                 </label>
-                                <select class="form-select" name="id_rango_etareo">
-                                    <option value="1" <?php echo (isset($_POST['id_rango_etareo']) && $_POST['id_rango_etareo'] == '1') ? 'selected' : ''; ?>>Niño</option>
-                                    <option value="2" <?php echo (isset($_POST['id_rango_etareo']) && $_POST['id_rango_etareo'] == '2') ? 'selected' : ''; ?>>Adulto</option>
-                                    <option value="3" <?php echo (isset($_POST['id_rango_etareo']) && $_POST['id_rango_etareo'] == '3') ? 'selected' : ''; ?>>Adolescente</option>
-                                </select>
-                            </div>
-    
-                        <!-- Estado -->
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label
-">
-                                    <i class="fas fa-toggle-on text-primary"></i> Estado
+                                <input type="date" class="form-control" name="fecha_registro" 
+                                       value="<?php echo isset($_POST['fecha_registro']) ? $_POST['fecha_registro'] : ''; ?>">
+                            </div>                       
+
+                        <!-- Profesión -->
+                            <div class="col-6 mb-3">
+                                <label class="form-label">
+                                    <i class="fas fa-toggle-on text-primary"></i> Profesión
                                 </label>
-                                <select class="form-select" name="id_estado">
-                                    <option value="1" <?php echo (isset($_POST['id_estado']) && $_POST['id_estado'] == '1') ? 'selected' : ''; ?>>Activo</option>
-                                    <option value="2" <?php echo (isset($_POST['id_estado']) && $_POST['id_estado'] == '2') ? 'selected' : ''; ?>>Inactivo</option>
+                                <select class="form-select" name="id_profesion">
+                                    <option value="1" <?php echo (isset($_POST['id_profesion']) && $_POST['id_profesion'] == '1') ? 'selected' : ''; ?>>Pre-Práctica</option>
+                                    <option value="2" <?php echo (isset($_POST['id_profesion']) && $_POST['id_profesion'] == '2') ? 'selected' : ''; ?>>Práctica</option>
                                 </select>
                             </div>  
                         <!-- Usuario -->

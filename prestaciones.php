@@ -1,12 +1,23 @@
 <?php
 include("../clinica_psicologica/conexion/conexion.php");
 $con = connection();
-$sql = "SELECT p.*, e.tipo_estado AS nombre_estado, 
-        r.nombre_rango_etareo AS nombre_rango 
-        FROM pacientes p
-        INNER JOIN tipo_estado e ON p.id_estado = e.id_estado
-        INNER JOIN tipo_rango_etareo r ON p.id_rango_etareo = r.id_rango_etareo 
-        order by p.id_paciente DESC";
+
+// Cambiamos INNER JOIN por LEFT JOIN para asegurar que se muestren los datos
+$sql = "SELECT 
+            p.id_evaluacion, 
+            p.rut, 
+            p.derivacion, 
+            p.comentarios, 
+            p.fecha_registro, 
+            p.usuario,
+            r.nombre_tipo_atencion AS tipo_atencion, 
+            z.Profesion AS tipo_profesion
+        FROM evaluaciones p
+        LEFT JOIN pacientes e ON p.rut = e.rut
+        LEFT JOIN tipo_atencion r ON p.id_tipo_atencion = r.id_atencion 
+        LEFT JOIN tipo_profesion z ON p.id_profesion = z.id_profesion
+        ORDER BY p.id_evaluacion DESC";
+
 $query = mysqli_query($con, $sql);
 ?>
 
@@ -15,7 +26,7 @@ $query = mysqli_query($con, $sql);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pacientes</title>
+    <title>Prestaciones</title>
     <link rel="stylesheet" href="css/pacientes.css">
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -52,7 +63,7 @@ $query = mysqli_query($con, $sql);
     </div>    
     
     <div class="menu-card mx-auto" style="max-width: 1400px;">
-        <h1 class="menu-title text-center mb-4">Pacientes</h1>   
+        <h1 class="menu-title text-center mb-4">Prestaciones</h1>   
         
         <!-- BUSCADOR -->
         <div class="search-section mb-4 p-4 mx-3">
@@ -65,7 +76,7 @@ $query = mysqli_query($con, $sql);
                         <input type="text" 
                         class="form-control border-start-0 ps-0 shadow-none" 
                         id="buscador" 
-                        placeholder="Buscar por pacientes..."
+                        placeholder="Buscador de prestaciones..."
                         autocomplete="off">
                         <button class="btn btn-outline-danger" type="button" id="btn-limpiar" style="display: none;">
                             <i class="fas fa-times"></i> Limpiar
@@ -73,8 +84,8 @@ $query = mysqli_query($con, $sql);
                     </div>
                 </div>
                 <div class="col-md-4 text-end">
-                    <a href="../clinica_psicologica/nuevo_paciente.php" class="btn btn-success btn-lg">
-                        <i class="fas fa-plus"></i> Nuevo Paciente
+                    <a href="../clinica_psicologica/nueva_prestacion.php" class="btn btn-success btn-lg">
+                        <i class="fas fa-plus"></i> Nueva Prestación
                     </a>
                 </div>
             </div>
@@ -86,15 +97,13 @@ $query = mysqli_query($con, $sql);
         <table class="table table-striped table-hover">
             <thead class="table-dark">
                 <tr>
-                    <th>RUT</th>
-                    <th>Nombres</th>
-                    <th>Apellidos</th>
-                    <th>Correo</th>
-                    <th>Celular</th>
+                    <th>Prestación</th>
+                    <th>Rut</th>
+                    <th>Tipo Atención</th>
+                    <th>Derivación</th>
                     <th>Comentarios</th>
                     <th>Fecha Registro</th>
-                    <th>Estado</th>
-                    <th>Rango de edad</th>
+                    <th>Profesión</th>
                     <th>Usuario Registro</th>
                     <th>Acciones</th>
                 </tr>
@@ -102,22 +111,20 @@ $query = mysqli_query($con, $sql);
             <tbody>
                 <?php while($row = mysqli_fetch_array($query)): ?>
                 <tr class="paciente-row">
+                    <td><?=$row['id_evaluacion']?></td>
                     <td><?=$row['rut']?></td>
-                    <td><?=$row['nombres']?></td>
-                    <td><?=$row['apellidos']?></td>
-                    <td><?=$row['email']?></td>
-                    <td><?=$row['celular']?></td>
+                    <td><?=$row['tipo_atencion']?></td>
+                    <td><?=$row['derivacion']?></td>
                     <td><?=$row['comentarios']?></td>
                     <td><?=$row['fecha_registro']?></td>
-                    <td><?=$row['nombre_estado']?></span></td>
-                    <td><?=$row['nombre_rango']?></td>
+                    <td><?=$row['tipo_profesion']?></td>
                     <td><?=$row['usuario']?></td>
                     <td>
-                        <a href="editar_paciente.php?id_paciente=<?php echo $row['id_paciente']; ?>" 
+                        <a href="editar_prestaciones.php?id_evaluacion=<?= $row['id_evaluacion']?>" 
                         class="btn btn-warning btn-sm me-1">
                             <i class="fas fa-edit"></i>
                         </a>
-                        <a class="btn btn-danger btn-sm me-1" href="eliminar_paciente.php?id_paciente=<?= $row['id_paciente']?>" 
+                        <a class="btn btn-danger btn-sm me-1" href="eliminar_prestacion.php?id_evaluacion=<?= $row['id_evaluacion']?>" 
                         onclick="return confirm('¿Estás seguro de que deseas eliminar este registro?');">
                         <i class="fas fa-trash"></i>
                         </a>                        

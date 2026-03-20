@@ -63,7 +63,7 @@ if (isset($_GET['id_paciente'])) {
                     <form action="edit_pacientes.php" method="POST" id="formPaciente">
                         <div class="row">
                             <!-- RUT -->
-                             <input type="hidden" name="id_paciente" value="<?= $row['id_paciente'] ?>">
+                            <input type="hidden" name="id_paciente" value="<?= $row['id_paciente'] ?>">
                             <div class="col-md-6 mb-3">
                                 <label class="form-label fw-bold">
                                     <i class="fas fa-id-card text-primary"></i> RUT *
