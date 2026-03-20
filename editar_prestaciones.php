@@ -66,45 +66,6 @@ if (isset($_GET['id_evaluacion'])) {
                                 </label>
                                 <input type="text" class="form-control" name="rut" value="<?= $row['rut'] ?>" required>
                             </div>
-                            <script>
-                                document.getElementById('rut').addEventListener('input', function(e) {
-                                let value = e.target.value.replace(/\./g, '').replace('-', '');
-                                
-                                if (value.match(/^(\d{2})(\d{3}){2}(\w{1})$/)) {
-                                    value = value.replace(/^(\d+)(\d{3})(\d{3})(\w{1})$/, '$1.$2.$3-$4');
-                                }
-                                e.target.value = value;
-
-                                if (fnValidarRut(value)) {
-                                    e.target.setCustomValidity("");
-                                    e.target.classList.remove('is-invalid');
-                                    e.target.classList.add('is-valid');
-                                } else {
-                                    e.target.setCustomValidity("RUT Inválido");
-                                    e.target.classList.add('is-invalid');
-                                    e.target.classList.remove('is-valid');
-                                }
-                            });
-
-                                function fnValidarRut(rutCompleto) {
-                                    if (!/^[0-9]+[-|‐][0-9kK]{1}$/.test(rutCompleto.replace(/\./g, ''))) return false;
-                                    
-                                    let tmp = rutCompleto.split('-');
-                                    let digv = tmp[1]; 
-                                    let rut = tmp[0].replace(/\./g, '');
-                                    if (digv == 'K') digv = 'k';
-                                    
-                                    return (fnDv(rut) == digv);
-                                }
-
-                                function fnDv(T) {
-                                    let M = 0, S = 1;
-                                    for (; T; T = Math.floor(T / 10)) {
-                                        S = (S + T % 10 * (9 - M++ % 6)) % 11;
-                                    }
-                                    return S ? S - 1 : 'k';
-                                }
-                            </script>
                             
                             <!-- Rango Etario -->
                             <div class="col-md-6 mb-3">

@@ -124,7 +124,7 @@ $query = mysqli_query($con, $sql);
                         class="btn btn-warning btn-sm me-1">
                             <i class="fas fa-edit"></i>
                         </a>
-                        <a class="btn btn-danger btn-sm me-1" href="eliminar_prestacion.php?id_evaluacion=<?= $row['id_evaluacion']?>" 
+                        <a class="btn btn-danger btn-sm me-1" href="eliminar_prestaciones.php?id_evaluacion=<?= $row['id_evaluacion']?>" 
                         onclick="return confirm('¿Estás seguro de que deseas eliminar este registro?');">
                         <i class="fas fa-trash"></i>
                         </a>                        
