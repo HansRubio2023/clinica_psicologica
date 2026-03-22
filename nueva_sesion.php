@@ -158,7 +158,7 @@ $query = mysqli_query($con, $sql);
                                 <label class="form-label fw-bold">
                                     <i class="fas fa-id-card text-primary"></i> Número de Sesión *
                                 </label>
-                                <input type="number" class="form-control" name="numero_sesion" 
+                                <input type="number" class="form-control" id="numero_sesion" name="numero_sesion" 
                                        min="1" required>
                             </div>
 
@@ -172,6 +172,34 @@ $query = mysqli_query($con, $sql);
                             </div>
                         </div>
                         
+                        <script>
+                            document.getElementById('rut').addEventListener('blur', function() {
+                                let rutValor = this.value;
+
+                                // Solo hacemos la consulta si el RUT es válido
+                                if (fnValidarRut(rutValor)) {
+                                    fetch('buscar_numero_sesion.php', {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/x-www-form-urlencoded',
+                                        },
+                                        body: 'rut=' + encodeURIComponent(rutValor)
+                                    })
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        if (data && data.siguiente_sesion) {
+                                            // Rellenar la caja de texto con el número calculado
+                                            document.getElementById('numero_sesion').value = data.siguiente_sesion;
+                                        }
+                                    })
+                                    .catch(error => console.error('Error en la petición:', error));
+                                } else {
+                                    // Si el RUT es inválido o se borra, limpiamos el campo
+                                    document.getElementById('numero_sesion').value = '';
+                                }
+                            });
+                            </script>
+
                         <!-- Comentarios -->
                         <div class="mb-3">
                             <label class="textarea-label">

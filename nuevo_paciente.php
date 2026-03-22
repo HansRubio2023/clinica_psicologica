@@ -201,10 +201,10 @@ $query = mysqli_query($con, $sql);
                                 <select class="form-select" name="id_estado">
                                     <option value="1" <?php echo (isset($_POST['id_estado']) && $_POST['id_estado'] == '1') ? 'selected' : ''; ?>>En curso</option>
                                     <option value="2" <?php echo (isset($_POST['id_estado']) && $_POST['id_estado'] == '2') ? 'selected' : ''; ?>>Derivado</option>
-                                    <option value="3" <?php echo (isset($_POST['id_estado']) && $_POST['id_estado'] == '3') ? 'selected' : ''; ?>>En curso</option>
-                                    <option value="4" <?php echo (isset($_POST['id_estado']) && $_POST['id_estado'] == '4') ? 'selected' : ''; ?>>Derivado</option>
-                                    <option value="5" <?php echo (isset($_POST['id_estado']) && $_POST['id_estado'] == '5') ? 'selected' : ''; ?>>En curso</option>
-                                    <option value="6" <?php echo (isset($_POST['id_estado']) && $_POST['id_estado'] == '6') ? 'selected' : ''; ?>>Derivado</option>
+                                    <option value="3" <?php echo (isset($_POST['id_estado']) && $_POST['id_estado'] == '3') ? 'selected' : ''; ?>>Deserción</option>
+                                    <option value="4" <?php echo (isset($_POST['id_estado']) && $_POST['id_estado'] == '4') ? 'selected' : ''; ?>>Alta Terapéutica</option>
+                                    <option value="5" <?php echo (isset($_POST['id_estado']) && $_POST['id_estado'] == '5') ? 'selected' : ''; ?>>Alta por deserción</option>
+                                    <option value="6" <?php echo (isset($_POST['id_estado']) && $_POST['id_estado'] == '6') ? 'selected' : ''; ?>>Alta administrativa</option>
                                 </select>
                             </div>  
                         <!-- Usuario -->
