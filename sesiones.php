@@ -2,21 +2,21 @@
 include("../clinica_psicologica/conexion/conexion.php");
 $con = connection();
 
-// Cambiamos INNER JOIN por LEFT JOIN para asegurar que se muestren los datos
 $sql = "SELECT 
-            p.id_evaluacion, 
-            p.rut, 
-            p.derivacion, 
-            p.comentarios, 
-            p.fecha_registro, 
-            p.usuario,
-            r.nombre_tipo_atencion AS tipo_atencion, 
-            z.Profesion AS tipo_profesion
-        FROM evaluaciones p
-        LEFT JOIN pacientes e ON p.rut = e.rut
-        LEFT JOIN tipo_atencion r ON p.id_tipo_atencion = r.id_atencion 
-        LEFT JOIN tipo_profesion z ON p.id_profesion = z.id_profesion
-        ORDER BY p.id_evaluacion DESC";
+    s.id_sesion,
+    s.rut,
+    p.nombres,
+    p.apellidos,
+    s.numero_sesion,
+    s.fecha_sesion,
+    s.comentarios,
+    s.usuario,
+    s.asiste
+    FROM 
+        sesiones s
+    INNER JOIN 
+        pacientes p ON s.rut = p.rut
+        ORDER BY s.id_sesion DESC";
 
 $query = mysqli_query($con, $sql);
 ?>
@@ -97,32 +97,34 @@ $query = mysqli_query($con, $sql);
         <table class="table table-striped table-hover">
             <thead class="table-dark">
                 <tr>
-                    <th>Sesión</th>
+                    <th>Número sesión</th>
                     <th>Rut</th>
-                    <th>Número Sesión</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
                     <th>Fecha sesión</th>
                     <th>Comentarios</th>
                     <th>Usuario</th>
                     <th>Asiste</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 <?php while($row = mysqli_fetch_array($query)): ?>
-                <tr class="paciente-row">
-                    <td><?=$row['id_evaluacion']?></td>
+                <tr class="sesiones-row">
+                    <td><?=$row['numero_sesion']?></td>
                     <td><?=$row['rut']?></td>
-                    <td><?=$row['tipo_atencion']?></td>
-                    <td><?=$row['derivacion']?></td>
+                    <td><?=$row['nombres']?></td>
+                    <td><?=$row['apellidos']?></td>
+                    <td><?=$row['fecha_sesion']?></td>
                     <td><?=$row['comentarios']?></td>
-                    <td><?=$row['fecha_registro']?></td>
-                    <td><?=$row['tipo_profesion']?></td>
                     <td><?=$row['usuario']?></td>
+                    <td><?=$row['asiste']?></td>
                     <td>
-                        <a href="editar_prestaciones.php?id_evaluacion=<?= $row['id_evaluacion']?>" 
+                        <a href="editar_sesion.php?id_sesion=<?= $row['id_sesion']?>" 
                         class="btn btn-warning btn-sm me-1">
                             <i class="fas fa-edit"></i>
                         </a>
-                        <a class="btn btn-danger btn-sm me-1" href="eliminar_prestaciones.php?id_evaluacion=<?= $row['id_evaluacion']?>" 
+                        <a class="btn btn-danger btn-sm me-1" href="eliminar_sesion.php?id_sesion=<?= $row['id_sesion']?>" 
                         onclick="return confirm('¿Estás seguro de que deseas eliminar este registro?');">
                         <i class="fas fa-trash"></i>
                         </a>                        
@@ -143,7 +145,7 @@ $query = mysqli_query($con, $sql);
     function buscarAutomatico() {
         const termino = buscador.value.trim().toLowerCase();
         // Buscamos las filas justo en el momento de escribir
-        const filas = document.querySelectorAll('.paciente-row');
+        const filas = document.querySelectorAll('.sesiones-row');
         
         filas.forEach(fila => {
             // Obtenemos todo el texto de la fila (RUT, Nombre, Apellido, etc.)
