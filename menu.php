@@ -38,7 +38,7 @@
                 Pacientes
             </a>
              <a href="prestaciones.php" class="btn btn-pacientes menu-btn">
-                <i class="fa-stethoscopefas fa-file-medical btn-icon"></i>
+                <i class="fa fa-stethoscopefas fa-file-medical btn-icon"></i>
                 Prestaciones
             </a>
              <a href="sesiones.php" class="btn btn-pacientes menu-btn">
