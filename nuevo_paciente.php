@@ -107,7 +107,7 @@ $query = mysqli_query($con, $sql);
                                     <i class="fas fa-user text-primary"></i> Nombres *
                                 </label>
                                 <input type="text" class="form-control" name="nombres" 
-                                       placeholder="Marcos Andrés" maxlength="50" required>
+                                       maxlength="50" required>
                             </div>
 
                             <!-- Apellido -->
@@ -117,7 +117,7 @@ $query = mysqli_query($con, $sql);
                                 </label>
                                 <input type="text" class="form-control" name="apellidos" 
                                        value="<?php echo isset($_POST['apellidos']) ? $_POST['apellidos'] : ''; ?>"
-                                       placeholder="Cuevas Rubio" maxlength="50" required>
+                                       maxlength="50" required>
                             </div>
 
                             <!-- Teléfono -->
@@ -214,7 +214,7 @@ $query = mysqli_query($con, $sql);
                                 </label>
                                 <input type="text" class="form-control" name="usuario" 
                                        value="<?php echo isset($_POST['usuario']) ? $_POST['usuario'] : ''; ?>"
-                                       placeholder="juanperez" maxlength="50">
+                                       placeholder="caespinozar" maxlength="50">
                             </div>
 
                         <!-- BOTONES -->

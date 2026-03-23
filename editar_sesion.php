@@ -114,14 +114,6 @@ if (isset($_GET['id_sesion'])) {
                             });
                         </script>
 
-                        <!-- Usuario -->
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">
-                                    <i class="fas fa-user-tag text-primary"></i> Usuario
-                                </label>
-                                <input type="text" class="form-control" name="usuario" value="<?= $row['usuario'] ?>"  maxlength="50">
-                            </div>
-                        <!--Crear una lista desplegable para el campo "Asiste" con opciones "Sí" y "No"-->
                         <div class="col-md-6 mb-3">
                             <label class="form-label">
                                 <i class="fas fa-check text-primary"></i> Asiste    
@@ -131,6 +123,14 @@ if (isset($_GET['id_sesion'])) {
                                     <option value="2" <?php echo ($row['asiste'] == '2') ? 'selected' : ''; ?>>No</option>
                                 </select>
                         </div>
+
+                        <!-- Usuario -->
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">
+                                    <i class="fas fa-user-tag text-primary"></i> Usuario
+                                </label>
+                                <input type="text" class="form-control" name="usuario" value="<?= $row['usuario'] ?>"  maxlength="50">
+                            </div>
 
                         <!-- BOTONES -->
                         <div class="d-grid gap-2 d-md-flex justify-content-md-between">

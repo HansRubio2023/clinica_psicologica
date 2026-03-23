@@ -103,8 +103,8 @@ $query = mysqli_query($con, $sql);
                     <th>Apellido</th>
                     <th>Fecha sesión</th>
                     <th>Comentarios</th>
-                    <th>Usuario</th>
                     <th>Asiste</th>
+                    <th>Usuario</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -116,9 +116,7 @@ $query = mysqli_query($con, $sql);
                 <td><?=$row['nombres']?></td>
                 <td><?=$row['apellidos']?></td>
                 <td><?=$row['fecha_sesion']?></td>
-                <td><?=$row['comentarios']?></td>
-                <td><?=$row['usuario']?></td>
-                
+                <td><?=$row['comentarios']?></td>                
                 <td>
                     <?php if($row['asiste'] == '1'): ?>
                         <span class="badge bg-success">Sí</span>
@@ -126,6 +124,7 @@ $query = mysqli_query($con, $sql);
                         <span class="badge bg-danger">No</span>
                     <?php endif; ?>
                 </td>
+                <td><?=$row['usuario']?></td>
 
                 <td>
                     <a href="editar_sesion.php?id_sesion=<?= $row['id_sesion']?>" 

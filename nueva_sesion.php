@@ -105,7 +105,7 @@ $query = mysqli_query($con, $sql);
                                     <i class="fas fa-user text-primary"></i> Nombres *
                                 </label>
                                 <input type="text" class="form-control" id="nombres" name="nombres" 
-                                       placeholder="Marcos Andrés" maxlength="50" required disabled>
+                                    maxlength="50" required disabled>
                             </div>
 
                             <!-- Apellido -->
@@ -114,8 +114,8 @@ $query = mysqli_query($con, $sql);
                                     <i class="fas fa-user-tag text-primary"></i> Apellidos *
                                 </label>
                                 <input type="text" class="form-control" id="apellidos" name="apellidos" 
-                                       value="<?php echo isset($_POST['apellidos']) ? $_POST['apellidos'] : ''; ?>"
-                                       placeholder="Cuevas Rubio" maxlength="50" required disabled>
+                                    value="<?php echo isset($_POST['apellidos']) ? $_POST['apellidos'] : ''; ?>"
+                                    maxlength="50" required disabled>
                             </div>
                             <script>
                                 document.getElementById('rut').addEventListener('blur', function() {
@@ -229,17 +229,7 @@ $query = mysqli_query($con, $sql);
                                 });
                             });
                         </script>
-
-                        <!-- Usuario -->
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">
-                                    <i class="fas fa-user-tag text-primary"></i> Usuario
-                                </label>
-                                <input type="text" class="form-control" name="usuario" 
-                                       value="<?php echo isset($_POST['usuario']) ? $_POST['usuario'] : ''; ?>"
-                                       placeholder="juanperez" maxlength="50">
-                            </div>
-
+                        
                         <div class="col-md-6 mb-3">
                             <label class="form-label">
                                 <i class="fas fa-check text-primary"></i> Asiste    
@@ -249,6 +239,16 @@ $query = mysqli_query($con, $sql);
                                 <option value="No" <?php echo (isset($_POST['asiste']) && $_POST['asiste'] == 'No') ? 'selected' : ''; ?>>No</option>
                             </select>
                         </div>
+
+                        <!-- Usuario -->
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">
+                                    <i class="fas fa-user-tag text-primary"></i> Usuario
+                                </label>
+                                <input type="text" class="form-control" name="usuario" 
+                                       value="<?php echo isset($_POST['usuario']) ? $_POST['usuario'] : ''; ?>"
+                                       placeholder="caespinozar" maxlength="50">
+                            </div>
 
                         <!-- BOTONES -->
                         <div class="d-grid gap-2 d-md-flex justify-content-md-between">

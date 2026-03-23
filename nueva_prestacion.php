@@ -179,7 +179,7 @@ $query = mysqli_query($con, $sql);
                                 </label>
                                 <input type="text" class="form-control" name="usuario" 
                                        value="<?php echo isset($_POST['usuario']) ? $_POST['usuario'] : ''; ?>"
-                                       placeholder="juanperez" maxlength="50">
+                                       placeholder="caespinozar" maxlength="50">
                             </div>
 
                         <!-- BOTONES -->

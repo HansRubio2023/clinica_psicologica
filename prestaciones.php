@@ -97,7 +97,6 @@ $query = mysqli_query($con, $sql);
         <table class="table table-striped table-hover">
             <thead class="table-dark">
                 <tr>
-                    <th>Prestación</th>
                     <th>Rut</th>
                     <th>Tipo Atención</th>
                     <th>Derivación</th>
@@ -111,7 +110,6 @@ $query = mysqli_query($con, $sql);
             <tbody>
                 <?php while($row = mysqli_fetch_array($query)): ?>
                 <tr class="paciente-row">
-                    <td><?=$row['id_evaluacion']?></td>
                     <td><?=$row['rut']?></td>
                     <td><?=$row['tipo_atencion']?></td>
                     <td><?=$row['derivacion']?></td>
