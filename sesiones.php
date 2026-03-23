@@ -111,27 +111,35 @@ $query = mysqli_query($con, $sql);
             <tbody>
                 <?php while($row = mysqli_fetch_array($query)): ?>
                 <tr class="sesiones-row">
-                    <td><?=$row['numero_sesion']?></td>
-                    <td><?=$row['rut']?></td>
-                    <td><?=$row['nombres']?></td>
-                    <td><?=$row['apellidos']?></td>
-                    <td><?=$row['fecha_sesion']?></td>
-                    <td><?=$row['comentarios']?></td>
-                    <td><?=$row['usuario']?></td>
-                    <td><?=$row['asiste']?></td>
-                    <td>
-                        <a href="editar_sesion.php?id_sesion=<?= $row['id_sesion']?>" 
-                        class="btn btn-warning btn-sm me-1">
-                            <i class="fas fa-edit"></i>
-                        </a>
-                        <a class="btn btn-danger btn-sm me-1" href="eliminar_sesion.php?id_sesion=<?= $row['id_sesion']?>" 
-                        onclick="return confirm('¿Estás seguro de que deseas eliminar este registro?');">
+                <td><?=$row['numero_sesion']?></td>
+                <td><?=$row['rut']?></td>
+                <td><?=$row['nombres']?></td>
+                <td><?=$row['apellidos']?></td>
+                <td><?=$row['fecha_sesion']?></td>
+                <td><?=$row['comentarios']?></td>
+                <td><?=$row['usuario']?></td>
+                
+                <td>
+                    <?php if($row['asiste'] == '1'): ?>
+                        <span class="badge bg-success">Sí</span>
+                    <?php else: ?>
+                        <span class="badge bg-danger">No</span>
+                    <?php endif; ?>
+                </td>
+
+                <td>
+                    <a href="editar_sesion.php?id_sesion=<?= $row['id_sesion']?>" 
+                    class="btn btn-warning btn-sm me-1">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    <a class="btn btn-danger btn-sm me-1" href="eliminar_sesion.php?id_sesion=<?= $row['id_sesion']?>" 
+                    onclick="return confirm('¿Estás seguro de que deseas eliminar este registro?');">
                         <i class="fas fa-trash"></i>
-                        </a>                        
-                    </td>
-                </tr> 
-                <?php endwhile; ?> 
-            </tbody>
+                    </a>                        
+                </td>
+            </tr> 
+            <?php endwhile; ?> 
+        </tbody>
         </table>
     </div>
 </div>
