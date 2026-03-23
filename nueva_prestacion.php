@@ -187,7 +187,7 @@ $query = mysqli_query($con, $sql);
                             <button type="submit" class="btn btn-success btn-lg px-4">
                                 <i class="fas fa-save"></i> Guardar Paciente
                             </button>
-                            <button type="button" class="btn btn-secondary btn-lg px-4" onclick="window.location.href='pacientes.php'">
+                            <button type="button" class="btn btn-secondary btn-lg px-4" onclick="window.location.href='prestaciones.php'">
                                 <i class="fas fa-times"></i> Cancelar
                             </button>
                         </div>

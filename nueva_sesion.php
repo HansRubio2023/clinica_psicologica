@@ -105,7 +105,7 @@ $query = mysqli_query($con, $sql);
                                     <i class="fas fa-user text-primary"></i> Nombres *
                                 </label>
                                 <input type="text" class="form-control" id="nombres" name="nombres" 
-                                       placeholder="Marcos Andrés" maxlength="50" required>
+                                       placeholder="Marcos Andrés" maxlength="50" required disabled>
                             </div>
 
                             <!-- Apellido -->
@@ -115,7 +115,7 @@ $query = mysqli_query($con, $sql);
                                 </label>
                                 <input type="text" class="form-control" id="apellidos" name="apellidos" 
                                        value="<?php echo isset($_POST['apellidos']) ? $_POST['apellidos'] : ''; ?>"
-                                       placeholder="Cuevas Rubio" maxlength="50" required>
+                                       placeholder="Cuevas Rubio" maxlength="50" required disabled>
                             </div>
                             <script>
                                 document.getElementById('rut').addEventListener('blur', function() {
@@ -239,7 +239,7 @@ $query = mysqli_query($con, $sql);
                                        value="<?php echo isset($_POST['usuario']) ? $_POST['usuario'] : ''; ?>"
                                        placeholder="juanperez" maxlength="50">
                             </div>
-                        <!--Crear una lista desplegable para el campo "Asiste" con opciones "Sí" y "No"-->
+
                         <div class="col-md-6 mb-3">
                             <label class="form-label">
                                 <i class="fas fa-check text-primary"></i> Asiste    
