@@ -57,7 +57,7 @@ $query = mysqli_query($con, $sql);
         <a id="inicio" href="menu.php" class="btn btn-inicio menu-btn">
             <i class="fas fa-home btn-icon"></i> Inicio
         </a>
-        <a id="cerrar_sesion" href="index.php" class="btn btn-logout menu-btn">
+        <a id="cerrar_sesion" href="logout.php" class="btn btn-logout menu-btn">
             <i class="fas fa-sign-out-alt btn-icon"></i> Cerrar Sesión
         </a>
     </div>    

@@ -1,3 +1,23 @@
+<?php
+include("conexion/Conexion.php");
+
+$con = connection();
+
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header("Location: index.php");
+    exit;
+}
+?>
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -20,7 +40,7 @@
                 Inicio
             </a>-->
                         
-            <a id= "cerrar_sesion" href="index.php" class="btn btn-logout menu-btn">
+            <a id= "cerrar_sesion" href="logout.php" class="btn btn-logout menu-btn">
                 <i class="fas fa-sign-out-alt btn-icon"></i>
                 Cerrar Sesión
             </a>
@@ -45,10 +65,19 @@
                 <i class="fas fa-calendar-check btn-icon"></i>
                 Sesiones
             </a>
-        </div>
+                <a href="usuarios.php" class="btn btn-pacientes menu-btn">
+                    <i class="fas fa-chart-bar btn-icon"></i>
+                    Usuarios
+                </a>
+                <div class=row justify-content-center>
+    <div  style="position: absolute; top: -50px;left: -450px;" >
+    <h2 style="color: white;"> <?php echo $_SESSION['email']; ?></h2>
+
+        
+</div>
 
 
-    <!-- Bootstrap 5 JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    </div>
+</div>  
 </body>
 </html>

@@ -18,14 +18,14 @@
     <div class="clearfix-padding"></div>
     <div class="login-container">
       <h1>Iniciar Sesión</h1>
-      <form id="loginForm" action="conexion/conexion.php" method="POST">
+      <form id="loginForm" action="login.php" method="POST">
         <div class="input-group">
           <label for="user">Usuario</label>
           <input
             type="text"
             id="user"
             name="user"
-            placeholder="Tu nombre de usuario"
+            placeholder="Tu email aquí"
             required
           />
         </div>
@@ -33,79 +33,10 @@
           <label for="pass">Contraseña</label>
           <input type="password" id="pass" name="pass" placeholder="Tu contraseña" required />
         </div>
-        <button type="submit" class="btn btn-success btn-lg px-4" onclick="location.href='menu.php'">Iniciar Sesión</button>
+        <button type="submit" class="btn btn-success btn-lg px-4">Iniciar Sesión</button>
       </form>
     
     </div>
-    <div class="clearfix-padding"></div>
-    <div class="clearfix-padding"></div>
-    <div class="clearfix-padding"></div>
-    <div id="qr-overlay">
-      <div id="qr-container">
-        <div id="qr-message">Escanea el código QR para descubrir nuestra carta</div>
-        <img id="qrcode" src="" alt="Código QR" />
-        <button onclick="hideQRCode()">Cerrar</button>
-      </div>
-    </div>
-    <script>
-      function showQRCode() {
-        const qrOverlay = document.getElementById('qr-overlay');
-        const qrContainer = document.getElementById('qr-container');
-        const qrCode = document.getElementById('qrcode');
-        QRCode.toDataURL('https://drive.google.com/file/d/1iuBKiy9Hu_XKmNbnSOZjXs5MBrUHYniI/view?usp=drive_link', { width: 300 }, function (err, url) {
-          if (err) {
-            console.error(err);
-            return;
-          }
-          qrCode.src = url;
-          qrOverlay.style.display = 'block';
-          qrContainer.style.display = 'block';
-        });
-      }
-      function hideQRCode() {
-        const qrOverlay = document.getElementById('qr-overlay');
-        qrOverlay.style.display = 'none';
-      }
-    </script>
-    <script>
-      document.getElementById('loginForm').addEventListener('submit', function(event) {
-        event.preventDefault();
-        const username = document.getElementById('user').value;
-        const password = document.getElementById('pass').value;
-        fetch('conexionbase/autenticar.php', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-          },
-          body: `user=${encodeURIComponent(username)}&pass=${encodeURIComponent(password)}`
-        })
-        .then(response => response.json())
-        .then(data => {
-          console.log('Respuesta del servidor:', data); 
-          if (data.success) {
-            switch(data.role) {
-              case 'admin':
-                window.location.href = 'htmlredireccion/paneladmin.html';
-                break;
-              case 'empleado':
-                window.location.href = 'htmlredireccion/paneltrabajador.html';
-                break;
-              case 'cliente':
-                window.location.href = 'htmlredireccion/panelcliente.html';
-                break;
-              default:
-                console.error('Rol desconocido:', data.role);
-                alert('Error: Rol de usuario desconocido');
-            }
-          } else {
-            alert(data.message || "Error de autenticación");
-          }
-        })
-        .catch(error => {
-          console.error('Error:', error);
-          alert("Ocurrió un error durante la autenticación. Por favor, revisa la consola para más detalles.");
-        });
-      });
-    </script>
+    
 </body>
 </html>
