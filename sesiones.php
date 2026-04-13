@@ -63,7 +63,7 @@ $query = mysqli_query($con, $sql);
     </div>    
     
     <div class="menu-card mx-auto" style="max-width: 1400px;">
-        <h1 class="menu-title text-center mb-4">Sesiones12</h1>   
+        <h1 class="menu-title text-center mb-4">Sesion</h1>   
         
         <!-- BUSCADOR -->
         <div class="search-section mb-4 p-4 mx-3">
