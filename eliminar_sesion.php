@@ -1,5 +1,7 @@
 <?php
 // Incluye tu conexión (asegúrate de que el nombre sea correcto)
+
+
 include("../clinica_psicologica/conexion/conexion.php"); 
 $con = connection();
 
@@ -19,4 +21,4 @@ if (isset($_GET['id_sesion'])) {
         echo "Error al eliminar el registro: " . mysqli_error($con);
     }
 }
-?>
+?> 

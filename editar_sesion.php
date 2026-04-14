@@ -1,6 +1,12 @@
 <?php
+session_start();
 include("../clinica_psicologica/conexion/conexion.php");
 $con = connection();
+
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header("Location: index.php");
+    exit;
+}
 
 if (isset($_GET['id_sesion'])) {
     $id_sesion = $_GET['id_sesion'];
@@ -134,10 +140,12 @@ if (isset($_GET['id_sesion'])) {
 
                         <!-- BOTONES -->
                         <div class="d-grid gap-2 d-md-flex justify-content-md-between">
-                            <button type="submit" class="btn btn-success btn-lg px-4">
+                            <button type="submit" class="btn btn-success btn-lg px-4"style=" font-family: 'poppins', sans-serif;
+    font-size: 20px;">
                                 <i class="fas fa-save"></i> Guardar Paciente
                             </button>
-                            <button type="button" class="btn btn-secondary btn-lg px-4" onclick="window.location.href='sesiones.php'">
+                            <button type="button" class="btn btn-secondary btn-lg px-4" onclick="window.location.href='sesiones.php'" style=" font-family: 'poppins', sans-serif;
+    font-size: 20px;">
                                 <i class="fas fa-times"></i> Cancelar
                             </button>
                         </div>

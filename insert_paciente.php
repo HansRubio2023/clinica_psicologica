@@ -2,6 +2,11 @@
 include("../clinica_psicologica/conexion/conexion.php");
 $con = connection();
 
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header("Location: index.php");
+    exit;
+}
+
 $rut = $_POST['rut'] ?? '';
 $nombres = $_POST['nombres'] ?? '';
 $apellidos = $_POST['apellidos'] ?? '';

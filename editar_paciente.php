@@ -1,6 +1,13 @@
 <?php
+session_start();
 include("../clinica_psicologica/conexion/conexion.php");
 $con = connection();
+
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header("Location: index.php");
+    exit;
+}
+
 
 // Verificamos si viene el ID por la URL
 if (isset($_GET['id_paciente'])) {
@@ -93,7 +100,7 @@ if (isset($_GET['id_paciente'])) {
                                 <label class="form-label">
                                     <i class="fas fa-phone text-primary"></i> Celular
                                 </label>
-                                <input type="text" class="form-control" name="celular" value="<?= $row['celular'] ?>">
+                                <input type="text" class="form-control" name="celular" value="<?= $row['celular'] ?>"required>
                             </div>
 
                             <!-- Email -->
@@ -178,10 +185,12 @@ if (isset($_GET['id_paciente'])) {
 
                         <!-- BOTONES -->
                         <div class="d-grid gap-2 d-md-flex justify-content-md-between">
-                            <button type="submit" class="btn btn-success btn-lg px-4">
+                            <button type="submit" class="btn btn-success btn-lg px-4"style=" font-family: 'poppins', sans-serif;
+    font-size: 20px;">
                                 <i class="fas fa-save"></i> Editar Paciente
                             </button>
-                            <button type="button" class="btn btn-secondary btn-lg px-4" onclick="window.location.href='pacientes.php'">
+                            <button type="button" class="btn btn-secondary btn-lg px-4" onclick="window.location.href='pacientes.php'" style=" font-family: 'poppins', sans-serif;
+    font-size: 20px;">
                                 <i class="fas fa-times"></i> Cancelar
                             </button>
                         </div>

@@ -1,8 +1,14 @@
 <?php
+session_start();
 include("../clinica_psicologica/conexion/conexion.php");
 $con = connection();
 
-$id_evaluacion = $_POST['id_evaluacion'] ?? null;
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header("Location: index.php");
+    exit;
+}
+
+//$id_evaluacion = $_POST['id_evaluacion'] ?? null;
 $rut = $_POST['rut'] ?? '';
 $id_tipo_atencion = $_POST['id_tipo_atencion'] ?? '';
 $derivacion = $_POST['derivacion'] ?? '';
@@ -11,8 +17,8 @@ $fecha_registro = $_POST['fecha_registro'] ?? date("Y-m-d");
 $usuario = $_POST['usuario'] ?? '';
 $id_profesion = $_POST['id_profesion'] ?? '';
 
-$sql = "INSERT INTO evaluaciones (id_evaluacion, rut, id_tipo_atencion, derivacion, comentarios, fecha_registro, usuario, id_profesion) 
-        VALUES ('$id_evaluacion', '$rut', '$id_tipo_atencion', '$derivacion', '$comentarios', '$fecha_registro', '$usuario', '$id_profesion')";
+$sql = "INSERT INTO evaluaciones ( rut, id_tipo_atencion, derivacion, comentarios, fecha_registro, usuario, id_profesion) 
+        VALUES ( '$rut', '$id_tipo_atencion', '$derivacion', '$comentarios', '$fecha_registro', '$usuario', '$id_profesion')";
 
 $query = mysqli_query($con, $sql);
 

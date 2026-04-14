@@ -1,7 +1,13 @@
 <?php
+session_start();
 include("../clinica_psicologica/conexion/conexion.php");
 
 $con = connection();
+
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header("Location: index.php");
+    exit;
+}
 
 $sql = "SELECT * FROM pacientes";
 $query = mysqli_query($con, $sql);
@@ -39,9 +45,9 @@ $query = mysqli_query($con, $sql);
                     <!-- Mensaje -->
 
                     <!-- Título -->
-                    <div class="text-center mb-4">
+                    <div class="text-center mb-4 ">
                         <h2 class="fw-bold text-primary mb-2">
-                            <i class="fas fa-user-plus"></i> Nuevo Paciente
+                            <i class="fas fa-user-plus" ></i> Nuevo Paciente
                         </h2>
                         <p class="text-muted">Complete todos los campos requeridos *</p>
                     </div>
@@ -127,7 +133,7 @@ $query = mysqli_query($con, $sql);
                                 </label>
                                 <input type="tel" class="form-control" name="celular" 
                                        value="<?php echo isset($_POST['celular']) ? $_POST['celular'] : ''; ?>"
-                                       placeholder="987654321" maxlength="15">
+                                       placeholder="987654321" maxlength="15"required>
                             </div>
 
                             <!-- Email -->
@@ -143,10 +149,10 @@ $query = mysqli_query($con, $sql);
                             <!-- Fecha Registro -->
                             <div class="col-12 mb-4">
                                 <label class="form-label">
-                                    <i class="fas fa-calendar-alt text-primary"></i> Fecha de Registro
+                                    <i class="fas fa-calendar-alt text-primary"></i> Fecha de Registro *
                                 </label>
                                 <input type="date" class="form-control" name="fecha_registro" 
-                                       value="<?php echo isset($_POST['fecha_registro']) ? $_POST['fecha_registro'] : ''; ?>">
+                                       value="<?php echo isset($_POST['fecha_registro']) ? $_POST['fecha_registro'] : ''; ?>"required>
                             </div>
                         </div>
                         
@@ -219,10 +225,12 @@ $query = mysqli_query($con, $sql);
 
                         <!-- BOTONES -->
                         <div class="d-grid gap-2 d-md-flex justify-content-md-between">
-                            <button type="submit" class="btn btn-success btn-lg px-4">
-                                <i class="fas fa-save"></i> Guardar Paciente
+                            <button type="submit" class="btn btn-success btn-lg px-4"style=" font-family: 'poppins', sans-serif;
+    font-size: 20px;">
+                                <i class="fas fa-save"></i> Guardar 
                             </button>
-                            <button type="button" class="btn btn-secondary btn-lg px-4" onclick="window.location.href='pacientes.php'">
+                            <button type="button" class="btn btn-secondary btn-lg px-4" onclick="window.location.href='pacientes.php'"style=" font-family: 'poppins', sans-serif;
+    font-size: 20px;">
                                 <i class="fas fa-times"></i> Cancelar
                             </button>
                         </div>

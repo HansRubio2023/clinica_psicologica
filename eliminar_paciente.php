@@ -1,5 +1,6 @@
 <?php
 // Incluye tu conexión (asegúrate de que el nombre sea correcto)
+
 include("../clinica_psicologica/conexion/conexion.php"); 
 $con = connection();
 

@@ -4,7 +4,12 @@ include("conexion/Conexion.php");
 
 $con = connection();
 
-$sql = "SELECT id, email,contrasena,fecha_logueo,usuario FROM usuarios";
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header("Location: index.php");
+    exit;
+}
+
+$sql = "SELECT id, email,contrasena,fecha_logueo,usuario,rol FROM usuarios";
 
 $query = mysqli_query($con, $sql);
 ?>
@@ -13,58 +18,48 @@ $query = mysqli_query($con, $sql);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pacientes</title>
-    <link rel="stylesheet" href="css/pacientes.css">
+    <title>Usuarios</title>
+    <link rel="stylesheet" href="css/nuevo_pacientes.css">
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <style>
-        /* CSS necesario para el buscador */
-        .search-section {
-            border: 2px solid #e9ecef;
-            border-radius: 15px;
-            background: rgba(255,255,255,0.9);
-        }
-        #buscador:focus {
-            box-shadow: 0 0 0 0.25rem rgba(0,123,255,0.25);
-            border-color: #007bff;
-        }
-        .paciente-row {
-            transition: all 0.3s ease;
-        }
-        .paciente-row:hover {
-            background-color: #f8f9fd;
-        }
-    </style>
+    <!-- Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
     <body>
-        <div class="menu-container">
-            <a id="inicio" href="menu.php" class="btn btn-inicio menu-btn">
-                <i class="fas fa-home btn-icon"></i>
-                Inicio
-            </a>
-                        
-            <a id= "cerrar_sesion" href="logout.php" class="btn btn-logout menu-btn">
-                <i class="fas fa-sign-out-alt btn-icon"></i>
-                Cerrar Sesión
-            </a>
-    </div>    
+         <a id="inicio" href="menu.php" class="btn btn-inicio menu-btn">
+            <i class="fas fa-home btn-icon"></i>
+            Inicio
+        </a>
+        
+        <a id="cerrar_sesion" href="logout.php" class="btn btn-logout menu-btn">
+            <i class="fas fa-sign-out-alt btn-icon"></i>
+            Cerrar Sesión
+        </a>
+    </div>   
     <div class="container mt-5">
-<h1>Panel de Usuarios</h1>
-<a href="nuevo_usuario.php" class="btn btn-primary mb-3">Agregar usuario</a>
+<h1 style="color: white; text-align: center;" >Panel de Usuarios</h1>
+<div class="d-flex justify-content-end mb-3">
+    <a href="nuevo_usuario.php"class="btn btn-success btn-lg" style=" font-family: 'poppins', sans-serif;
+    font-size: 20px;">
+         <i class="fas fa-plus" ></i> Nueva Sesión
+    </a>
+</div>
 
-<table class="table table-bordered">
-    <thead>
+<div class="card-body p-4">
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead class="table-dark">
         <tr>
             <th>ID</th>
             <th>Email</th>
             <th>contraseña</th>
             <th>Fecha de registro</th>
-            <th>Usuario</th>
+            <th>Nombre</th>
+            <th>Rol</th>
             <th>Acciones</th>
         </tr>
+        </thead>
     </thead>
     <tbody>
         <?php while($fila = mysqli_fetch_assoc($query)) { ?>
@@ -74,9 +69,13 @@ $query = mysqli_query($con, $sql);
             <td><?= $fila['contrasena'] ?></td>
             <td><?= $fila['fecha_logueo'] ?></td>
             <td><?= $fila['usuario'] ?></td>
+            <td><?= $fila['rol'] ?></td>
             
             <td class="acciones"> 
-                <a href="edit_usuario.php?id=<?= $fila['id'] ?>" class="btn btn-warning btn-sm">Editar</a>
+                <a href="edit_usuario.php?id=<?= $fila['id'] ?>" class="btn btn-warning btn-sm me-1" >
+                        <i class="fas fa-edit"></i>
+                    </a>
+
 
             </td>
         </tr>
@@ -86,3 +85,4 @@ $query = mysqli_query($con, $sql);
 </div>
     </body>
 </html>
+

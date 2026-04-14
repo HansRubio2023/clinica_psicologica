@@ -10,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"]== "POST"){
     $user = $_POST['user'];
     $pass = $_POST['pass'];
 
-    $stmt = $con->prepare("SELECT id, email, contrasena,usuario FROM usuarios WHERE email = ?");
+    $stmt = $con->prepare("SELECT id, email, contrasena,usuario,rol FROM usuarios WHERE email = ?");
     $stmt->bind_param("s", $user);
     $stmt->execute();   
     $result = $stmt->get_result();
@@ -24,6 +24,7 @@ if ($_SERVER["REQUEST_METHOD"]== "POST"){
         $_SESSION['id'] = $user['id'];
         $_SESSION['email'] = $user['email'];
         $_SESSION['usuario'] = $user['usuario'];
+        $_SESSION['rol'] = $user['rol'];
 
         header("Location: menu.php");
         exit;

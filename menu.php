@@ -12,6 +12,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     header("Location: index.php");
     exit;
 }
+
 ?>
 
 
@@ -53,25 +54,31 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
                 </center>
             </h1>
             
-            <a href="pacientes.php" class="btn btn-pacientes menu-btn">
+            <a href="pacientes.php" class="btn btn-pacientes menu-btn" style=" font-family: 'poppins', sans-serif;
+    font-size: 20px;">
                 <i class="fas fa-users btn-icon"></i>
                 Pacientes
             </a>
-             <a href="prestaciones.php" class="btn btn-pacientes menu-btn">
+             <a href="prestaciones.php" class="btn btn-pacientes menu-btn" style=" font-family: 'poppins', sans-serif;
+    font-size: 20px;">
                 <i class="fa fa-stethoscopefas fa-file-medical btn-icon"></i>
                 Prestaciones
             </a>
-             <a href="sesiones.php" class="btn btn-pacientes menu-btn">
+             <a href="sesiones.php" class="btn btn-pacientes menu-btn"style=" font-family: 'poppins', sans-serif;
+    font-size: 20px;">
                 <i class="fas fa-calendar-check btn-icon"></i>
                 Sesiones
             </a>
-                <a href="usuarios.php" class="btn btn-pacientes menu-btn">
+            <?php if ($_SESSION['rol'] === 'admin'): ?>
+                <a href="usuarios.php" class="btn btn-pacientes menu-btn"style=" font-family: 'poppins', sans-serif;
+    font-size: 20px;">  
                     <i class="fas fa-chart-bar btn-icon"></i>
                     Usuarios
                 </a>
+            <?php endif; ?>
                 <div class=row justify-content-center>
-    <div  style="position: absolute; top: -50px;left: -450px;" >
-    <h2 style="color: white;"> <?php echo $_SESSION['email']; ?></h2>
+    <div  style="position: absolute; top: -50px;left: -400px;" >
+    <h2 style="color: white;"> <?php echo $_SESSION['usuario']; ?></h2>
 
         
 </div>

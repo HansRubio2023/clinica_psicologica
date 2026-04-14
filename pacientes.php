@@ -1,6 +1,13 @@
 <?php
+session_start();
 include("../clinica_psicologica/conexion/conexion.php");
 $con = connection();
+
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header("Location: index.php");
+    exit;
+}
+
 $sql = "SELECT p.*, e.tipo_estado AS nombre_estado, 
         r.nombre_rango_etareo AS nombre_rango 
         FROM pacientes p
@@ -52,7 +59,7 @@ $query = mysqli_query($con, $sql);
     </div>    
     
     <div class="menu-card mx-auto" style="max-width: 1400px;">
-        <h1 class="menu-title text-center mb-4">Pacientes</h1>   
+        <h1 class="menu-title text-center mb-4" >Pacientes</h1>   
         
         <!-- BUSCADOR -->
         <div class="search-section mb-4 p-4 mx-3">
@@ -73,7 +80,8 @@ $query = mysqli_query($con, $sql);
                     </div>
                 </div>
                 <div class="col-md-4 text-end">
-                    <a href="../clinica_psicologica/nuevo_paciente.php" class="btn btn-success btn-lg">
+                    <a href="../clinica_psicologica/nuevo_paciente.php" class="btn btn-success btn-lg" style=" font-family: 'poppins', sans-serif;
+    font-size: 20px;">
                         <i class="fas fa-plus"></i> Nuevo Paciente
                     </a>
                 </div>

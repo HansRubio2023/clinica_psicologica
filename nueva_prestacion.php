@@ -1,7 +1,12 @@
 <?php
+session_start();
 include("../clinica_psicologica/conexion/conexion.php");
 
 $con = connection();
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header("Location: index.php");
+    exit;
+}
 
 $sql = "SELECT * FROM evaluaciones";
 $query = mysqli_query($con, $sql);
@@ -156,10 +161,10 @@ $query = mysqli_query($con, $sql);
                          <!-- Fecha Registro -->
                             <div class="col-6 mb-4">
                                 <label class="form-label">
-                                    <i class="fas fa-calendar-alt text-primary"></i> Fecha de Registro
+                                    <i class="fas fa-calendar-alt text-primary"></i> Fecha de Registro *
                                 </label>
                                 <input type="date" class="form-control" name="fecha_registro" 
-                                       value="<?php echo isset($_POST['fecha_registro']) ? $_POST['fecha_registro'] : ''; ?>">
+                                       value="<?php echo isset($_POST['fecha_registro']) ? $_POST['fecha_registro'] : ''; ?>"required>
                             </div>                       
 
                         <!-- Profesión -->
@@ -184,10 +189,12 @@ $query = mysqli_query($con, $sql);
 
                         <!-- BOTONES -->
                         <div class="d-grid gap-2 d-md-flex justify-content-md-between">
-                            <button type="submit" class="btn btn-success btn-lg px-4">
-                                <i class="fas fa-save"></i> Guardar Paciente
+                            <button type="submit" class="btn btn-success btn-lg px-4"style=" font-family: 'poppins', sans-serif;
+    font-size: 20px;">
+                                <i class="fas fa-save"></i> Guardar
                             </button>
-                            <button type="button" class="btn btn-secondary btn-lg px-4" onclick="window.location.href='prestaciones.php'">
+                            <button type="button" class="btn btn-secondary btn-lg px-4" onclick="window.location.href='prestaciones.php'" style=" font-family: 'poppins', sans-serif;
+    font-size: 20px;">
                                 <i class="fas fa-times"></i> Cancelar
                             </button>
                         </div>

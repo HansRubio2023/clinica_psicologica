@@ -16,7 +16,7 @@
 <body class="login-background">
     <div class="clearfix-padding"></div>
     <div class="clearfix-padding"></div>
-    <div class="login-container">
+    <div class="login-container"style="margin-top: -50px;">
       <h1>Iniciar Sesión</h1>
       <form id="loginForm" action="login.php" method="POST">
         <div class="input-group">
