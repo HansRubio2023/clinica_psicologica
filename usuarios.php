@@ -1,5 +1,6 @@
 <?php 
 session_start();
+
 include("conexion/Conexion.php");
 
 $con = connection();

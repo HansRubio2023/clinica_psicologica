@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 include("../clinica_psicologica/conexion/conexion.php");
 
 $con = connection();
@@ -16,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
     $usuario = $_POST['usuario'];
     $rol = $_POST['rol'];
 
-    // Verificar si el email ya existe en otro usuario
+     
     $verificar = "SELECT * FROM usuarios WHERE email = '$email' AND id != '$id'";
     $resultado = mysqli_query($con, $verificar);
 
@@ -24,10 +25,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
         header("Location: edit_usuario.php?id=$id&error=email_exists");
         exit();
     } else {
-        $sql = "UPDATE usuarios SET email='$email', contrasena='$contrasena', usuario='$usuario', rol = '$rol' WHERE id='$id'";
-        $query = mysqli_query($con, $sql);
-
-        if($query){
+      if (!empty($contrasena)) {
+            $contrasena = password_hash($contrasena, PASSWORD_DEFAULT);
+            $sql = "UPDATE usuarios SET email='$email', contrasena='$contrasena', usuario='$usuario', rol='$rol' WHERE id='$id'";
+        } else {
+            $sql = "UPDATE usuarios SET email='$email', usuario='$usuario', rol='$rol' WHERE id='$id'";
+        }
+        $query = mysqli_query($con, $sql);  if($query){
             Header("Location: usuarios.php");
         } else {
             header("Location: edit_usuario.php?id=$id&error=update_failed");
@@ -82,8 +86,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
                     
                     <div class="mb-3">
                         <label for="contrasena" class="form-label"></label>
-                        <i class="fa-solid fa-key text-primary"></i> Contraseña
-                        <input type="password" class="form-control" id="contrasena" name="contrasena" value="<?= $fila['contrasena'] ?>" required>
+                        <i class="fa-solid fa-key text-primary"></i> Contraseña 
+                        <input type="password" class="form-control" id="contrasena" name="contrasena" placeholder="Nueva contraseña">
                     </div>
                     <div class="mb-3">
                         <label for="usuario" class="form-label"></label>

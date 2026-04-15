@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 include("../clinica_psicologica/conexion/conexion.php");
 $con = connection();
 
@@ -129,7 +130,7 @@ if (isset($_GET['id_evaluacion'])) {
                                     <label class="form-label">
                                         <i class="fas fa-calendar-alt text-primary"></i> Fecha de Registro
                                     </label>
-                                    <input type="date" class="form-control" name="fecha_registro" value="<?= $row['fecha_registro'] ?>">
+                                    <input type="date" class="form-control" name="fecha_registro" value="<?= $row['fecha_registro'] ?>"required>
                                 </div>
                             </div>
                         
@@ -139,7 +140,7 @@ if (isset($_GET['id_evaluacion'])) {
                                 <label class="form-label">
                                     <i class="fas fa-user-tag text-primary"></i> Usuario
                                 </label>
-                                <input type="text" class="form-control" name="usuario" value="<?= $row['usuario'] ?>">
+                                <input type="text" class="form-control" name="usuario" value="<?php echo $_SESSION['email']?>">
                             </div>
                         
                         <!-- Estado -->

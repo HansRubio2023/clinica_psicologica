@@ -1,9 +1,13 @@
 <?php 
 
 session_start();
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
 
 include("../clinica_psicologica/conexion/conexion.php");
 $con = connection();
+
 
 if ($_SERVER["REQUEST_METHOD"]== "POST"){
     
@@ -19,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"]== "POST"){
     
     $user = $result->fetch_assoc();
 
-    if($pass === $user['contrasena']){
+    if(password_verify($pass, $user['contrasena'])){
         $_SESSION['loggedin'] = true;
         $_SESSION['id'] = $user['id'];
         $_SESSION['email'] = $user['email'];

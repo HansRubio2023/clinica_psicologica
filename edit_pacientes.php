@@ -1,6 +1,14 @@
 <?php
+session_start();
+
 include("../clinica_psicologica/conexion/conexion.php");
 $con = connection();
+
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header("Location: index.php");
+    exit;
+}
+
 
 // Capturamos los datos asegurándonos que coincidan con el atributo 'name' del HTML
 $id_paciente = $_POST['id_paciente']; // Este es el ID del paciente que queremos actualizar

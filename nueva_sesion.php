@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 include("../clinica_psicologica/conexion/conexion.php");
 
 $con = connection();
@@ -251,8 +252,8 @@ $query = mysqli_query($con, $sql);
                                     <i class="fas fa-user-tag text-primary"></i> Usuario
                                 </label>
                                 <input type="text" class="form-control" name="usuario" 
-                                       value="<?php echo isset($_POST['usuario']) ? $_POST['usuario'] : ''; ?>"
-                                       placeholder="caespinozar" maxlength="50">
+                                       value="<?php echo $_SESSION['email'] ?>"
+                                       placeholder="caespinozar" maxlength="50" disabled>
                             </div>
 
                         <!-- BOTONES -->

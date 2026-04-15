@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 include("../clinica_psicologica/conexion/conexion.php");
 $con = connection();
 
@@ -135,7 +136,7 @@ if (isset($_GET['id_sesion'])) {
                                 <label class="form-label">
                                     <i class="fas fa-user-tag text-primary"></i> Usuario
                                 </label>
-                                <input type="text" class="form-control" name="usuario" value="<?= $row['usuario'] ?>"  maxlength="50">
+                                <input type="text" class="form-control" name="usuario" value="<?= $_SESSION['email'] ?>"  maxlength="50">
                             </div>
 
                         <!-- BOTONES -->

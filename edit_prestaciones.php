@@ -1,6 +1,13 @@
 <?php
+session_start();
+
 include("../clinica_psicologica/conexion/conexion.php");
 $con = connection();
+
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header("Location: index.php");
+    exit;
+}
 
 $id_paciente = $_POST['id_evaluacion']; 
 $rut = $_POST['rut'];

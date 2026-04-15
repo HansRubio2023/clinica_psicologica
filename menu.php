@@ -1,17 +1,20 @@
 <?php
+
+session_start();
+
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Pragma: no-cache");
+
+
 include("conexion/Conexion.php");
-
 $con = connection();
-
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-
 
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     header("Location: index.php");
     exit;
 }
+
+
 
 ?>
 
@@ -78,7 +81,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
             <?php endif; ?>
                 <div class=row justify-content-center>
     <div  style="position: absolute; top: -50px;left: -400px;" >
-    <h2 style="color: white;"> <?php echo $_SESSION['usuario']; ?></h2>
+    <h2 style="color: white;"> <?php  echo $_SESSION['usuario']; ?></h2>
 
         
 </div>

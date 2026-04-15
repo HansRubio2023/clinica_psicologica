@@ -1,5 +1,6 @@
 <?php 
 session_start();
+
 include("conexion/Conexion.php");
 $con = connection();
 
@@ -7,10 +8,20 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     header("Location: index.php");
     exit;
 }
-
-$mail = $_POST['email'];
+$id = $_POST['id'];
+$email = $_POST['email'];
 $password = $_POST['contrasena'];
+$password=password_hash($password, PASSWORD_DEFAULT);
 $usuario = $_POST['usuario'];
+
+
+
+$verificar = "SELECT * FROM usuarios WHERE email = '$email' AND id != '$id'";
+    $resultado = mysqli_query($con, $verificar);
+if(mysqli_num_rows($resultado) > 0) {
+        header("Location: nuevo_usuario.php?id=$id&error=email_exists");
+        exit();
+    }
 
 $sql = "INSERT INTO usuarios (email, contrasena, usuario) VALUES ('$mail', '$password', '$usuario')";
 $query = mysqli_query($con, $sql);

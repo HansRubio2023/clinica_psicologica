@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 include("../clinica_psicologica/conexion/conexion.php");
 
 $con = connection();
@@ -43,6 +44,16 @@ $query = mysqli_query($con, $sql);
             <div class="row justify-content-center">
             <div class="col-lg-8 col-xl-6">
                     <!-- Mensaje -->
+
+                    <?php
+            if(isset($_GET['error'])) {
+                if($_GET['error'] == 'rut_exists') {
+                    echo '<div class="alert alert-danger text-center" role="alert">Error: El rut ya está registrado</div>';
+                } elseif($_GET['error'] == 'insert_failed') {
+                    echo '<div class="alert alert-danger text-center" role="alert">Error al insertar el usuario</div>';
+                }
+            }
+            ?>
 
                     <!-- Título -->
                     <div class="text-center mb-4 ">
@@ -219,7 +230,7 @@ $query = mysqli_query($con, $sql);
                                     <i class="fas fa-user-tag text-primary"></i> Usuario
                                 </label>
                                 <input type="text" class="form-control" name="usuario" 
-                                       value="<?php echo isset($_POST['usuario']) ? $_POST['usuario'] : ''; ?>"
+                                       value="<?php echo $_SESSION['email']; ?>"
                                        placeholder="caespinozar" maxlength="50">
                             </div>
 

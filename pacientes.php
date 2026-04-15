@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 include("../clinica_psicologica/conexion/conexion.php");
 $con = connection();
 
@@ -14,7 +15,9 @@ $sql = "SELECT p.*, e.tipo_estado AS nombre_estado,
         INNER JOIN tipo_estado e ON p.id_estado = e.id_estado
         INNER JOIN tipo_rango_etareo r ON p.id_rango_etareo = r.id_rango_etareo 
         order by p.id_paciente DESC";
+$sql2 = "SELECT * FROM usuarios";
 $query = mysqli_query($con, $sql);
+$query2= mysqli_query($con, $sql2);
 ?>
 
 <!DOCTYPE html>
