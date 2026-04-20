@@ -7,6 +7,14 @@ $con = connection();
 if (isset($_GET['id_paciente'])) {
     $id = $_GET['id_paciente'];
 
+    $verificador = mysqli_query($con, "SELECT COUNT(*) as total FROM sesiones WHERE rut =(SELECT rut FROM pacientes WHERE id_paciente ='$id')");
+    $resultado = mysqli_fetch_assoc($verificador);
+
+    if($resultado['total']> 0){
+        header("location: pacientes.php?error=tiene_sesiones");
+
+    }
+
     // Usamos una sentencia preparada para proteger la base de datos
     $sql = "DELETE FROM pacientes WHERE id_paciente = ?";
     $stmt = mysqli_prepare($con, $sql);

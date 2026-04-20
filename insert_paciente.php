@@ -1,8 +1,6 @@
 <?php
 session_start();
-header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
-header("Cache-Control: post-check=0, pre-check=0", false);
-header("Pragma: no-cache");
+
 include("../clinica_psicologica/conexion/conexion.php");
 $con = connection();
 
@@ -29,6 +27,12 @@ $usuario = $_POST['usuario'] ?? '';
         header("Location: nuevo_paciente.php?id=$id&error=rut_exists");
         exit();
     }
+
+    if (empty($fecha_registro)) {
+    $_SESSION['error'] = "La fecha de registro es obligatoria";
+    header("Location: nuevo_paciente.php");
+    exit();
+}
     
 
 $sql = "INSERT INTO pacientes (rut, nombres, apellidos, email, celular, id_rango_etareo, comentarios, fecha_registro, id_estado, usuario) 

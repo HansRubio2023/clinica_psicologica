@@ -5,7 +5,7 @@ include("../clinica_psicologica/conexion/conexion.php");
 
 $con = connection();
 
-if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true || $_SESSION['rol']!=='admin') {
     header("Location: index.php");
     exit;
 }

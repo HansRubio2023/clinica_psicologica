@@ -18,6 +18,13 @@ $fecha_registro = $_POST['fecha_registro'] ?? date("Y-m-d");
 $usuario = $_POST['usuario'] ?? '';
 $id_profesion = $_POST['id_profesion'] ?? '';
 
+if (empty($fecha_registro)) {
+    $_SESSION['error'] = "La fecha de registro es obligatoria";
+    header("Location: nueva_prestacion.php");
+    exit;
+}
+    
+
 $sql = "INSERT INTO evaluaciones ( rut, id_tipo_atencion, derivacion, comentarios, fecha_registro, usuario, id_profesion) 
         VALUES ( '$rut', '$id_tipo_atencion', '$derivacion', '$comentarios', '$fecha_registro', '$usuario', '$id_profesion')";
 

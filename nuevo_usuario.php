@@ -4,7 +4,7 @@ session_start();
 include("../clinica_psicologica/conexion/conexion.php");
 
 $con = connection();
-if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true || $_SESSION['rol']!=='admin') {
     header("Location: index.php");
     exit;
 }
@@ -53,7 +53,7 @@ $query = mysqli_query($con, $sql);
                 <div class="mb-3">
                     <label for="contrasena" class="form-label"></label>
                     <i class="fa-solid fa-key text-primary"></i> Contraseña
-                    <input type="password" class="form-control" id="contrasena" name="contrasena" placeholder="contraseña">
+                    <input type="password" class="form-control" id="contrasena" name="contrasena" placeholder="contraseña" required>
                 </div>
                 </div>
                 <div class="mb-3">

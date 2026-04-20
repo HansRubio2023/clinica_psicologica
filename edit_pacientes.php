@@ -23,6 +23,12 @@ $fecha_registro = $_POST['fecha_registro'];
 $id_estado = $_POST['id_estado'];
 $usuario = $_POST['usuario'];
 
+if (empty($fecha_registro)) {
+    $_SESSION['error'] = "No puedes dejar la fecha vacía";
+    header("Location: editar_paciente.php?id_paciente=" . $_POST['id_paciente']);
+    exit();
+}
+
 // Preparamos el UPDATE usando el rut_original en el WHERE
 $sql = "UPDATE pacientes SET 
         rut='$rut', 

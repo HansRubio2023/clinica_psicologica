@@ -5,7 +5,7 @@ include("conexion/Conexion.php");
 
 $con = connection();
 
-if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true || $_SESSION['rol']!=='admin') {
     header("Location: index.php");
     exit;
 }
@@ -52,7 +52,7 @@ $query = mysqli_query($con, $sql);
         <table class="table table-striped table-hover">
             <thead class="table-dark">
         <tr>
-            <th>ID</th>
+           <!-- <th>ID</th> -->
             <th>Email</th>
             <th>contraseña</th>
             <th>Fecha de registro</th>
@@ -65,7 +65,7 @@ $query = mysqli_query($con, $sql);
     <tbody>
         <?php while($fila = mysqli_fetch_assoc($query)) { ?>
         <tr>
-            <td><?= $fila['id'] ?></td>
+            <!--<td><?= $fila['id'] ?></td>-->
             <td><?= $fila['email'] ?></td>
             <td><?= $fila['contrasena'] ?></td>
             <td><?= $fila['fecha_logueo'] ?></td>

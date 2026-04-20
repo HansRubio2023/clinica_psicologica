@@ -63,7 +63,15 @@ $query2= mysqli_query($con, $sql2);
     
     <div class="menu-card mx-auto" style="max-width: 1400px;">
         <h1 class="menu-title text-center mb-4" >Pacientes</h1>   
-        
+       
+                    <?php
+            if(isset($_GET['error'])) {
+                if($_GET['error'] == 'tiene_sesiones') {
+                    echo '<div class="alert alert-danger text-center" role="alert"> No se puede eliminar ya que el paciente está asociado a sesiones</div>';
+              }
+            }
+            ?>
+
         <!-- BUSCADOR -->
         <div class="search-section mb-4 p-4 mx-3">
             <div class="row align-items-center g-3">

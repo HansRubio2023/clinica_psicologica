@@ -9,14 +9,14 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     exit;
 }
 $id = $_POST['id'];
-$email = $_POST['email'];
+$mail = $_POST['email'];
 $password = $_POST['contrasena'];
 $password=password_hash($password, PASSWORD_DEFAULT);
 $usuario = $_POST['usuario'];
 
 
 
-$verificar = "SELECT * FROM usuarios WHERE email = '$email' AND id != '$id'";
+$verificar = "SELECT * FROM usuarios WHERE email = '$mail' AND id != '$id'";
     $resultado = mysqli_query($con, $verificar);
 if(mysqli_num_rows($resultado) > 0) {
         header("Location: nuevo_usuario.php?id=$id&error=email_exists");

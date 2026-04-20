@@ -22,6 +22,13 @@ $comentarios = $_POST['comentarios'];
 $usuario = $_POST['usuario'];
 $asiste = $_POST['asiste'];
 
+
+if (empty($fecha_sesion)) {
+    $_SESSION['error'] = "No puedes dejar la fecha vacía";
+    header("Location: editar_sesion.php?id_sesion=" . $_POST['id_sesion']);
+    exit();
+}
+
 $sql = "UPDATE sesiones SET 
         rut='$rut', 
         numero_sesion='$numero_sesion', 

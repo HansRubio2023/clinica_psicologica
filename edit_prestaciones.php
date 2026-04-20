@@ -18,6 +18,12 @@ $fecha_registro = $_POST['fecha_registro'];
 $usuario = $_POST['usuario'];
 $id_profesion = $_POST['id_profesion'];
 
+if (empty($fecha_registro)) {
+    $_SESSION['error'] = "No puedes dejar la fecha vacía";
+    header('location: editar_prestaciones.php?id_evaluacion=' . $_POST['id_evaluacion']);
+    exit();
+}
+
 $sql = "UPDATE evaluaciones SET 
         rut='$rut', 
         id_tipo_atencion='$id_tipo_atencion', 
