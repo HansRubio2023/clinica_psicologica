@@ -82,7 +82,7 @@ $query = mysqli_query($con, $sql);
                         <input type="text" 
                         class="form-control border-start-0 ps-0 shadow-none" 
                         id="buscador" 
-                        placeholder="Buscador de sesiones..."
+                        placeholder="Buscar por: Rut, Nombre, Apellido, Correo"
                         autocomplete="off">
                         <button class="btn btn-outline-danger" type="button" id="btn-limpiar" style="display: none;">
                             <i class="fas fa-times"></i> Limpiar

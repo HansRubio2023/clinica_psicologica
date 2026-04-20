@@ -115,6 +115,24 @@ $query = mysqli_query($con, $sql);
                             }
                         </script>
 
+                        <!-- nombre -->
+                         <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">
+                                    <i class="fas fa-user text-primary"></i> Nombres *
+                                </label>
+                                <input type="text" class="form-control" name="nombre" 
+                                       maxlength="50" required>
+                            </div>
+
+                            <!-- Apellido -->
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">
+                                    <i class="fas fa-user-tag text-primary"></i> Apellidos *
+                                </label>
+                                <input type="text" class="form-control" name="apellido" 
+                                       value="<?php echo isset($_POST['apellido']) ? $_POST['apellido'] : ''; ?>"
+                                       maxlength="50" required>
+                            </div>
                         <!-- Tipo Atención -->
                         <div class="col-9 mb-3">
                             <label class="form-label fw-bold">

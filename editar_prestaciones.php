@@ -91,6 +91,24 @@ if (isset($_GET['id_evaluacion'])) {
                                 </label>
                                 <input type="text" class="form-control" name="rut" value="<?= $row['rut'] ?>" required>
                             </div>
+
+                              <!-- Nombre -->
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">
+                                    <i class="fas fa-user text-primary"></i> Nombres *
+                                </label>
+                                <input type="text" class="form-control" name="nombre" 
+                                value="<?= $row['nombre'] ?>" required>
+                            </div>
+
+                            <!-- Apellido -->
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-bold">
+                                    <i class="fas fa-user-tag text-primary"></i> Apellidos *
+                                </label>
+                                <input type="text" class="form-control" name="apellido" value="<?= $row['apellido'] ?>" required>
+                            </div>
+
                            
                             <!-- Rango Etario -->
                             <div class="col-md-6 mb-3">
