@@ -1,0 +1,22 @@
+body {
+    background: linear-gradient(135deg, #2e325e 0%, #2e325e 100%);
+    background-attachment: fixed;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 10px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.btn-inicio {
+    background: linear-gradient(45deg, #007bff, #0056b3);
+    color: white;
+}

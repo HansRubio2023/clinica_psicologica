@@ -1,6 +1,12 @@
 <?php
+session_start();
+
 include("../clinica_psicologica/conexion/conexion.php");
 $con = connection();
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header("Location: index.php");
+    exit;
+}
 
 // Cambiamos INNER JOIN por LEFT JOIN para asegurar que se muestren los datos
 $sql = "SELECT 
@@ -57,7 +63,7 @@ $query = mysqli_query($con, $sql);
         <a id="inicio" href="menu.php" class="btn btn-inicio menu-btn">
             <i class="fas fa-home btn-icon"></i> Inicio
         </a>
-        <a id="cerrar_sesion" href="index.php" class="btn btn-logout menu-btn">
+        <a id="cerrar_sesion" href="logout.php" class="btn btn-logout menu-btn">
             <i class="fas fa-sign-out-alt btn-icon"></i> Cerrar Sesión
         </a>
     </div>    
@@ -84,7 +90,8 @@ $query = mysqli_query($con, $sql);
                     </div>
                 </div>
                 <div class="col-md-4 text-end">
-                    <a href="../clinica_psicologica/nueva_prestacion.php" class="btn btn-success btn-lg">
+                    <a href="../clinica_psicologica/nueva_prestacion.php" class="btn btn-success btn-lg"style=" font-family: 'poppins', sans-serif;
+    font-size: 20px;">
                         <i class="fas fa-plus"></i> Nueva Prestación
                     </a>
                 </div>

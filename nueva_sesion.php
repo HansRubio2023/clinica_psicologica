@@ -1,7 +1,13 @@
 <?php
+session_start();
+
 include("../clinica_psicologica/conexion/conexion.php");
 
 $con = connection();
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header("Location: index.php");
+    exit;
+}
 
 $sql = "SELECT * FROM sesiones";
 $query = mysqli_query($con, $sql);
@@ -14,11 +20,19 @@ $query = mysqli_query($con, $sql);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sesiones</title>
     <link rel="stylesheet" href="css/nuevo_pacientes.css">
-    <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    
-    <!-- Font Awesome para iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+    <style>
+        .flatpickr-day.feriado {
+            background-color: #dc3545 !important;
+            color: white !important;
+        }
+        .flatpickr-day.feriado:hover {
+            background-color: #bb2d3b !important;
+        }
+    </style>
 </head>
 <body>
     <form action="insert_sesion.php" method="POST">
@@ -28,7 +42,7 @@ $query = mysqli_query($con, $sql);
                 Inicio
             </a>
                         
-            <a id= "cerrar_sesion" href="index.php" class="btn btn-logout menu-btn">
+            <a id= "cerrar_sesion" href="logout.php" class="btn btn-logout menu-btn">
                 <i class="fas fa-sign-out-alt btn-icon"></i>
                 Cerrar Sesión
             </a>
@@ -36,6 +50,14 @@ $query = mysqli_query($con, $sql);
         <div class="menu-card">
             <div class="row justify-content-center">
             <div class="col-lg-8 col-xl-6">
+                    
+            <!-- Mensajes -->
+                 <?php if (isset($_SESSION['error'])): ?>
+                <div class="alert alert-danger"> <?= $_SESSION['error']; ?>
+                 </div>
+                 <?php unset($_SESSION['error']); ?>
+                <?php endif; ?>
+
                     <!-- Título -->
                     <div class="text-center mb-4">
                         <h2 class="fw-bold text-primary mb-2">
@@ -63,7 +85,7 @@ $query = mysqli_query($con, $sql);
                                 document.getElementById('rut').addEventListener('input', function(e) {
                                 let value = e.target.value.replace(/\./g, '').replace('-', '');
                                 
-                                if (value.match(/^(\d{2})(\d{3}){2}(\w{1})$/)) {
+                                 if(/^\d{7,8}[0-9kk]$/.test(value)) {
                                     value = value.replace(/^(\d+)(\d{3})(\d{3})(\w{1})$/, '$1.$2.$3-$4');
                                 }
                                 e.target.value = value;
@@ -163,13 +185,15 @@ $query = mysqli_query($con, $sql);
                             </div>
 
                             <!-- Fecha Sesión -->
-                            <div class="col-12 mb-4">
-                                <label class="form-label">
-                                    <i class="fas fa-calendar-alt text-primary"></i> Fecha de Sesión
-                                </label>
-                                <input type="date" class="form-control" name="fecha_sesion" 
-                                       value="<?php echo isset($_POST['fecha_sesion']) ? $_POST['fecha_sesion'] : ''; ?>">
-                            </div>
+                            <div class="col-6 mb-4">
+                            <label class="form-label fw-bold">
+                                <i class="fas fa-calendar-alt text-primary"></i> Fecha de Registro *
+                            </label>
+                            <input type="text" class="form-control" name="fecha_registro" id="fecha_registro"
+                                value="<?php echo isset($_POST['fecha_registro']) ? $_POST['fecha_registro'] : ''; ?>"
+                                placeholder="Seleccione una fecha" required readonly>
+                        </div>
+
                         </div>
                         
                         <script>
@@ -246,20 +270,53 @@ $query = mysqli_query($con, $sql);
                                     <i class="fas fa-user-tag text-primary"></i> Usuario
                                 </label>
                                 <input type="text" class="form-control" name="usuario" 
-                                       value="<?php echo isset($_POST['usuario']) ? $_POST['usuario'] : ''; ?>"
-                                       placeholder="caespinozar" maxlength="50">
+                                       value="<?php echo $_SESSION['email'] ?>"
+                                       placeholder="caespinozar" maxlength="50" >
                             </div>
 
                         <!-- BOTONES -->
                         <div class="d-grid gap-2 d-md-flex justify-content-md-between">
-                            <button type="submit" class="btn btn-success btn-lg px-4">
-                                <i class="fas fa-save"></i> Guardar Paciente
+                            <button type="submit" class="btn btn-success btn-lg px-4"style=" font-family: 'poppins', sans-serif;
+    font-size: 20px;">
+                                <i class="fas fa-save"></i> Guardar 
                             </button>
-                            <button type="button" class="btn btn-secondary btn-lg px-4" onclick="window.location.href='sesiones.php'">
+                            <button type="button" class="btn btn-secondary btn-lg px-4" onclick="window.location.href='sesiones.php'" style=" font-family: 'poppins', sans-serif;
+    font-size: 20px;">
                                 <i class="fas fa-times"></i> Cancelar
                             </button>
                         </div>
                     </form>
+                     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
+    <script>
+        async function init() {
+            let feriados = {};
+            const y = new Date().getFullYear();
+            try {
+                for (const año of [y, y + 1]) {
+                    const data = await (await fetch(`https://feriados-cl.netlify.app/api/holidays/${año}`)).json();
+                    Object.values(data.feriados).flat().forEach(f => {
+                        feriados[`${año}-${String(f.mes).padStart(2,'0')}-${String(f.dia).padStart(2,'0')}`] = f.descripcion;
+                    });
+                }
+            } catch(e) {}
+
+            flatpickr("#fecha_registro", {
+                locale: "es",
+                dateFormat: "Y-m-d",
+                disable: Object.keys(feriados),
+                onDayCreate: (_, __, ___, day) => {
+                    const fecha = day.dateObj.toISOString().split('T')[0];
+                    if (feriados[fecha]) {
+                        day.classList.add('feriado');
+                        day.title = feriados[fecha];
+                    }
+                }
+            });
+        }
+        init();
+    </script>
                 </div>
             </div>
         </div>

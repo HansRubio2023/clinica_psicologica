@@ -1,6 +1,13 @@
 <?php
+session_start();
+
 include("../clinica_psicologica/conexion/conexion.php");
 $con = connection();
+
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header("Location: index.php");
+    exit;
+}
 
 if (isset($_GET['id_sesion'])) {
     $id_sesion = $_GET['id_sesion'];
@@ -31,6 +38,13 @@ if (isset($_GET['id_sesion'])) {
     
     <!-- Font Awesome para iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<style>
+    .flatpickr-day.feriado {
+        background-color: #dc3545 !important;
+        color: white !important;
+    }
+</style>
 </head>
 <body>
     <div class="menu-container">
@@ -39,7 +53,7 @@ if (isset($_GET['id_sesion'])) {
                 Inicio
             </a>
                         
-            <a id= "cerrar_sesion" href="index.php" class="btn btn-logout menu-btn">
+            <a id= "cerrar_sesion" href="logout.php" class="btn btn-logout menu-btn">
                 <i class="fas fa-sign-out-alt btn-icon"></i>
                 Cerrar Sesión
             </a>
@@ -47,7 +61,19 @@ if (isset($_GET['id_sesion'])) {
         <div class="menu-card">
             <div class="row justify-content-center">
             <div class="col-lg-8 col-xl-6">
-                    <!-- Título -->
+                <!--Mensaje -->
+
+             <?php if (isset($_SESSION['error'])): ?>
+                 <div class="alert alert-danger">
+                     <?= $_SESSION['error']; ?>
+                  </div>
+                    <?php unset($_SESSION['error']); ?>
+                     <?php endif; ?>
+
+
+
+
+                     <!-- Título -->
                     <div class="text-center mb-4">
                         <h2 class="fw-bold text-primary mb-2">
                             <i class="fas fa-user-plus"></i> Editar Sesión
@@ -78,12 +104,14 @@ if (isset($_GET['id_sesion'])) {
                             </div>
 
                             <!-- Fecha Sesión -->
-                            <div class="col-12 mb-4">
-                                <label class="form-label">
-                                    <i class="fas fa-calendar-alt text-primary"></i> Fecha de Sesión
-                                </label>
-                                <input type="date" class="form-control" name="fecha_sesion" value="<?= $row['fecha_sesion'] ?>">
-                            </div>
+                           <div class="col-12 mb-4">
+                        <label class="form-label fw-bold">
+                         <i class="fas fa-calendar-alt text-primary"></i> Fecha de Sesión *
+                        </label>
+                      <input type="text" class="form-control" name="fecha_sesion" id="fecha_sesion"
+                                value="<?= isset($_POST['fecha_sesion']) ? $_POST['fecha_sesion'] : $row['fecha_sesion'] ?>"
+                                placeholder="Seleccione una fecha" required>
+                        </div>
                         
 
                         <!-- Comentarios -->
@@ -129,19 +157,51 @@ if (isset($_GET['id_sesion'])) {
                                 <label class="form-label">
                                     <i class="fas fa-user-tag text-primary"></i> Usuario
                                 </label>
-                                <input type="text" class="form-control" name="usuario" value="<?= $row['usuario'] ?>"  maxlength="50">
+                                <input type="text" class="form-control" name="usuario" value="<?= $_SESSION['email'] ?>"  maxlength="50">
                             </div>
 
                         <!-- BOTONES -->
                         <div class="d-grid gap-2 d-md-flex justify-content-md-between">
-                            <button type="submit" class="btn btn-success btn-lg px-4">
-                                <i class="fas fa-save"></i> Guardar Paciente
+                            <button type="submit" class="btn btn-success btn-lg px-4"style=" font-family: 'poppins', sans-serif;
+    font-size: 20px;">
+                                <i class="fas fa-save"></i> Guardar
                             </button>
-                            <button type="button" class="btn btn-secondary btn-lg px-4" onclick="window.location.href='sesiones.php'">
+                            <button type="button" class="btn btn-secondary btn-lg px-4" onclick="window.location.href='sesiones.php'" style=" font-family: 'poppins', sans-serif;
+    font-size: 20px;">
                                 <i class="fas fa-times"></i> Cancelar
                             </button>
                         </div>
                     </form>
+                    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
+<script>
+    async function init() {
+        let feriados = {};
+        const y = new Date().getFullYear();
+        try {
+            for (const año of [y, y + 1]) {
+                const data = await (await fetch(`https://feriados-cl.netlify.app/api/holidays/${año}`)).json();
+                Object.values(data.feriados).flat().forEach(f => {
+                    feriados[`${año}-${String(f.mes).padStart(2,'0')}-${String(f.dia).padStart(2,'0')}`] = f.descripcion;
+                });
+            }
+        } catch(e) {}
+
+        flatpickr("#fecha_sesion", {
+            locale: "es",
+            dateFormat: "Y-m-d",
+            disable: Object.keys(feriados),
+            onDayCreate: (_, __, ___, day) => {
+                const fecha = day.dateObj.toISOString().split('T')[0];
+                if (feriados[fecha]) {
+                    day.classList.add('feriado');
+                    day.title = feriados[fecha];
+                }
+            }
+        });
+    }
+    init();
+</script>
                 </div>
             </div>
         </div>

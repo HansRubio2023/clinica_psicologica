@@ -1,6 +1,14 @@
 <?php
+session_start();
+
 include("../clinica_psicologica/conexion/conexion.php");
 $con = connection();
+
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header("Location: index.php");
+    exit;
+}
+
 
 // Verificamos si viene el ID por la URL
 if (isset($_GET['id_paciente'])) {
@@ -24,15 +32,24 @@ if (isset($_GET['id_paciente'])) {
 <!DOCTYPE html>
 <html lang="es">
 <head>
+ 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pacientes</title>
     <link rel="stylesheet" href="css/nuevo_pacientes.css">
-    <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    
-    <!-- Font Awesome para iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+    <style>
+        .flatpickr-day.feriado {
+            background-color: #dc3545 !important;
+            color: white !important;
+        }
+        .flatpickr-day.feriado:hover {
+            background-color: #bb2d3b !important;
+        }
+    </style>
 </head>
 <body>
    <div class="menu-container">
@@ -41,7 +58,7 @@ if (isset($_GET['id_paciente'])) {
                 Inicio
             </a>
                         
-            <a id= "cerrar_sesion" href="index.php" class="btn btn-logout menu-btn">
+            <a id= "cerrar_sesion" href="logout.php" class="btn btn-logout menu-btn">
                 <i class="fas fa-sign-out-alt btn-icon"></i>
                 Cerrar Sesión
             </a>
@@ -50,6 +67,12 @@ if (isset($_GET['id_paciente'])) {
             <div class="row justify-content-center">
             <div class="col-lg-8 col-xl-6">
                     <!-- Mensaje -->
+                       <?php if (isset($_SESSION['error'])): ?>
+                         <div class="alert alert-danger">
+                         <?= $_SESSION['error']; ?>
+                         </div>
+                         <?php unset($_SESSION['error']); ?>
+                            <?php endif; ?>
 
                     <!-- Título -->
                     <div class="text-center mb-4">
@@ -63,7 +86,7 @@ if (isset($_GET['id_paciente'])) {
                     <form action="edit_pacientes.php" method="POST" id="formPaciente">
                         <div class="row">
                             <!-- RUT -->
-                            <input type="hidden" name="id_paciente" value="<?= $row['id_paciente'] ?>">
+                            <input type="hidden" name="id_paciente" value="<?= $row['id_paciente'] ?>"required>
                             <div class="col-md-6 mb-3">
                                 <label class="form-label fw-bold">
                                     <i class="fas fa-id-card text-primary"></i> RUT *
@@ -90,10 +113,10 @@ if (isset($_GET['id_paciente'])) {
 
                             <!-- Celular -->
                             <div class="col-md-6 mb-3">
-                                <label class="form-label">
-                                    <i class="fas fa-phone text-primary"></i> Celular
+                                <label class="form-label fw-bold">
+                                    <i class="fas fa-phone text-primary"></i> Celular *
                                 </label>
-                                <input type="text" class="form-control" name="celular" value="<?= $row['celular'] ?>">
+                                <input type="text" class="form-control" name="celular" value="<?= $row['celular'] ?>"required>
                             </div>
 
                             <!-- Email -->
@@ -105,12 +128,13 @@ if (isset($_GET['id_paciente'])) {
                             </div>
 
                             <!-- Fecha Registro -->
-                            <div class="col-12 mb-4">
-                                <label class="form-label">
-                                    <i class="fas fa-calendar-alt text-primary"></i> Fecha de Registro
-                                </label>
-                                <input type="date" class="form-control" name="fecha_registro" value="<?= $row['fecha_registro'] ?>">
-                            </div>
+                           <div class="col-6 mb-4">
+                            <label class="form-label fw-bold">
+                                <i class="fas fa-calendar-alt text-primary"></i> Fecha de Registro *
+                            </label>
+                            <input type="text" class="form-control" name="fecha_registro" id="fecha_registro"
+                                value="<?= isset($_POST['fecha_registro']) ? $_POST['fecha_registro'] : $row['fecha_registro'] ?>"
+                                placeholder="Seleccione una fecha" required>
                         </div>
                         
                         <div class="mb-3">
@@ -173,19 +197,52 @@ if (isset($_GET['id_paciente'])) {
                                 <label class="form-label">
                                     <i class="fas fa-user-tag text-primary"></i> Usuario
                                 </label>
-                                <input type="text" class="form-control" name="usuario" value="<?= $row['usuario'] ?>">
+                                <input type="text" class="form-control" name="usuario" value=<?php echo $_SESSION['email']; ?>>
                             </div>
 
                         <!-- BOTONES -->
                         <div class="d-grid gap-2 d-md-flex justify-content-md-between">
-                            <button type="submit" class="btn btn-success btn-lg px-4">
-                                <i class="fas fa-save"></i> Editar Paciente
+                            <button type="submit" class="btn btn-success btn-lg px-4"style=" font-family: 'poppins', sans-serif;
+    font-size: 20px;">
+                                <i class="fas fa-save"></i> Guardar
                             </button>
-                            <button type="button" class="btn btn-secondary btn-lg px-4" onclick="window.location.href='pacientes.php'">
+                            <button type="button" class="btn btn-secondary btn-lg px-4" onclick="window.location.href='pacientes.php'" style=" font-family: 'poppins', sans-serif;
+    font-size: 20px;">
                                 <i class="fas fa-times"></i> Cancelar
                             </button>
                         </div>
                     </form>
+         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
+    <script>
+        async function init() {
+            let feriados = {};
+            const y = new Date().getFullYear();
+            try {
+                for (const año of [y, y + 1]) {
+                    const data = await (await fetch(`https://feriados-cl.netlify.app/api/holidays/${año}`)).json();
+                    Object.values(data.feriados).flat().forEach(f => {
+                        feriados[`${año}-${String(f.mes).padStart(2,'0')}-${String(f.dia).padStart(2,'0')}`] = f.descripcion;
+                    });
+                }
+            } catch(e) {}
+
+            flatpickr("#fecha_registro", {
+                locale: "es",
+                dateFormat: "Y-m-d",
+                disable: Object.keys(feriados),
+                onDayCreate: (_, __, ___, day) => {
+                    const fecha = day.dateObj.toISOString().split('T')[0];
+                    if (feriados[fecha]) {
+                        day.classList.add('feriado');
+                        day.title = feriados[fecha];
+                    }
+                }
+            });
+        }
+        init();
+    </script>
                 </div>
             </div>
         </div>

@@ -29,14 +29,14 @@ body {
 
 .login-container {
     background-color: #3d383829;
-    padding: 2rem;
+    padding: 3rem;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 400px;
-    height: 560px;
+    height: 490px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: space-around;
+    align-items: flex-start;
 }
 
 .login-container h1 {
@@ -98,7 +98,8 @@ button {
     border-radius: 4px;
     background-color: #0723ae;
     color: #000000;
-    font-size: 1rem;
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
     cursor: pointer;
     transition: background-color 0.3s ease, color 0.3s ease;
 }

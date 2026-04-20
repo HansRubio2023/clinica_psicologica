@@ -1,6 +1,18 @@
 <?php
+session_start();
+
+
 include("../clinica_psicologica/conexion/conexion.php");
 $con = connection();
+
+
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header("Location: index.php");
+    exit;
+}
+
+
+
 
 $id_sesion = $_POST['id_sesion']; 
 $rut = $_POST['rut'];
@@ -9,6 +21,13 @@ $fecha_sesion = $_POST['fecha_sesion'];
 $comentarios = $_POST['comentarios'];  
 $usuario = $_POST['usuario'];
 $asiste = $_POST['asiste'];
+
+
+if (empty($fecha_sesion)) {
+    $_SESSION['error'] = "No puedes dejar la fecha vacía";
+    header("Location: editar_sesion.php?id_sesion=" . $_POST['id_sesion']);
+    exit();
+}
 
 $sql = "UPDATE sesiones SET 
         rut='$rut', 

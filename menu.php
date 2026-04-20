@@ -1,3 +1,26 @@
+<?php
+
+session_start();
+
+
+
+
+include("conexion/Conexion.php");
+$con = connection();
+
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header("Location: index.php");
+    exit;
+}
+
+
+
+?>
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -20,7 +43,7 @@
                 Inicio
             </a>-->
                         
-            <a id= "cerrar_sesion" href="index.php" class="btn btn-logout menu-btn">
+            <a id= "cerrar_sesion" href="logout.php" class="btn btn-logout menu-btn">
                 <i class="fas fa-sign-out-alt btn-icon"></i>
                 Cerrar Sesión
             </a>
@@ -33,22 +56,37 @@
                 </center>
             </h1>
             
-            <a href="pacientes.php" class="btn btn-pacientes menu-btn">
+            <a href="pacientes.php" class="btn btn-pacientes menu-btn" style=" font-family: 'poppins', sans-serif;
+    font-size: 20px;">
                 <i class="fas fa-users btn-icon"></i>
                 Pacientes
             </a>
-             <a href="prestaciones.php" class="btn btn-pacientes menu-btn">
+             <a href="prestaciones.php" class="btn btn-pacientes menu-btn" style=" font-family: 'poppins', sans-serif;
+    font-size: 20px;">
                 <i class="fa fa-stethoscopefas fa-file-medical btn-icon"></i>
                 Prestaciones
             </a>
-             <a href="sesiones.php" class="btn btn-pacientes menu-btn">
+             <a href="sesiones.php" class="btn btn-pacientes menu-btn"style=" font-family: 'poppins', sans-serif;
+    font-size: 20px;">
                 <i class="fas fa-calendar-check btn-icon"></i>
                 Sesiones
             </a>
-        </div>
+            <?php if ($_SESSION['rol'] === 'admin'): ?>
+                <a href="usuarios.php" class="btn btn-pacientes menu-btn"style=" font-family: 'poppins', sans-serif;
+    font-size: 20px;">  
+                    <i class="fas fa-chart-bar btn-icon"></i>
+                    Usuarios
+                </a>
+            <?php endif; ?>
+                <div class=row justify-content-center>
+    <div  style="position: absolute; top: -50px;left: -400px;" >
+    <h2 style="color: white;"> <?php  echo $_SESSION['usuario']; ?></h2>
+
+        
+</div>
 
 
-    <!-- Bootstrap 5 JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    </div>
+</div>  
 </body>
 </html>

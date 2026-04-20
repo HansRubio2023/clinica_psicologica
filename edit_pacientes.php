@@ -1,6 +1,14 @@
 <?php
+session_start();
+
 include("../clinica_psicologica/conexion/conexion.php");
 $con = connection();
+
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header("Location: index.php");
+    exit;
+}
+
 
 // Capturamos los datos asegurándonos que coincidan con el atributo 'name' del HTML
 $id_paciente = $_POST['id_paciente']; // Este es el ID del paciente que queremos actualizar
@@ -14,6 +22,12 @@ $comentarios = $_POST['comentarios'];
 $fecha_registro = $_POST['fecha_registro'];
 $id_estado = $_POST['id_estado'];
 $usuario = $_POST['usuario'];
+
+if (empty($fecha_registro)) {
+    $_SESSION['error'] = "No puedes dejar la fecha vacía";
+    header("Location: editar_paciente.php?id_paciente=" . $_POST['id_paciente']);
+    exit();
+}
 
 // Preparamos el UPDATE usando el rut_original en el WHERE
 $sql = "UPDATE pacientes SET 

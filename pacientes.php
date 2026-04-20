@@ -1,13 +1,23 @@
 <?php
+session_start();
+
 include("../clinica_psicologica/conexion/conexion.php");
 $con = connection();
+
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header("Location: index.php");
+    exit;
+}
+
 $sql = "SELECT p.*, e.tipo_estado AS nombre_estado, 
         r.nombre_rango_etareo AS nombre_rango 
         FROM pacientes p
         INNER JOIN tipo_estado e ON p.id_estado = e.id_estado
         INNER JOIN tipo_rango_etareo r ON p.id_rango_etareo = r.id_rango_etareo 
         order by p.id_paciente DESC";
+$sql2 = "SELECT * FROM usuarios";
 $query = mysqli_query($con, $sql);
+$query2= mysqli_query($con, $sql2);
 ?>
 
 <!DOCTYPE html>
@@ -46,14 +56,22 @@ $query = mysqli_query($con, $sql);
         <a id="inicio" href="menu.php" class="btn btn-inicio menu-btn">
             <i class="fas fa-home btn-icon"></i> Inicio
         </a>
-        <a id="cerrar_sesion" href="index.php" class="btn btn-logout menu-btn">
+        <a id="cerrar_sesion" href="logout.php" class="btn btn-logout menu-btn">
             <i class="fas fa-sign-out-alt btn-icon"></i> Cerrar Sesión
         </a>
     </div>    
     
     <div class="menu-card mx-auto" style="max-width: 1400px;">
-        <h1 class="menu-title text-center mb-4">Pacientes</h1>   
-        
+        <h1 class="menu-title text-center mb-4" >Pacientes</h1>   
+       
+                    <?php
+            if(isset($_GET['error'])) {
+                if($_GET['error'] == 'tiene_sesiones') {
+                    echo '<div class="alert alert-danger text-center" role="alert"> No se puede eliminar ya que el paciente está asociado a sesiones</div>';
+              }
+            }
+            ?>
+
         <!-- BUSCADOR -->
         <div class="search-section mb-4 p-4 mx-3">
             <div class="row align-items-center g-3">
@@ -73,7 +91,8 @@ $query = mysqli_query($con, $sql);
                     </div>
                 </div>
                 <div class="col-md-4 text-end">
-                    <a href="../clinica_psicologica/nuevo_paciente.php" class="btn btn-success btn-lg">
+                    <a href="../clinica_psicologica/nuevo_paciente.php" class="btn btn-success btn-lg" style=" font-family: 'poppins', sans-serif;
+    font-size: 20px;">
                         <i class="fas fa-plus"></i> Nuevo Paciente
                     </a>
                 </div>
