@@ -11,6 +11,8 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 
 $id_paciente = $_POST['id_evaluacion']; 
 $rut = $_POST['rut'];
+$nombre= $_POST['nombre'];
+$apellido= $_POST['apellido'];
 $id_tipo_atencion = $_POST['id_tipo_atencion'];
 $derivacion = $_POST['derivacion'];
 $comentarios = $_POST['comentarios'];  
@@ -26,6 +28,8 @@ if (empty($fecha_registro)) {
 
 $sql = "UPDATE evaluaciones SET 
         rut='$rut', 
+        nombre='$nombre',
+        apellido='$apellido',
         id_tipo_atencion='$id_tipo_atencion', 
         derivacion='$derivacion', 
         comentarios='$comentarios', 

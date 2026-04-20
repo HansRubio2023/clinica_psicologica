@@ -11,6 +11,8 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 
 //$id_evaluacion = $_POST['id_evaluacion'] ?? null;
 $rut = $_POST['rut'] ?? '';
+$nombre= $_POST['nombre']?? '';
+$apellido= $_POST['apellido']?? '';
 $id_tipo_atencion = $_POST['id_tipo_atencion'] ?? '';
 $derivacion = $_POST['derivacion'] ?? '';
 $comentarios = $_POST['comentarios'];
@@ -25,8 +27,8 @@ if (empty($fecha_registro)) {
 }
     
 
-$sql = "INSERT INTO evaluaciones ( rut, id_tipo_atencion, derivacion, comentarios, fecha_registro, usuario, id_profesion) 
-        VALUES ( '$rut', '$id_tipo_atencion', '$derivacion', '$comentarios', '$fecha_registro', '$usuario', '$id_profesion')";
+$sql = "INSERT INTO evaluaciones ( rut, nombre, apellido, id_tipo_atencion, derivacion, comentarios, fecha_registro, usuario, id_profesion) 
+        VALUES ( '$rut', '$nombre', '$apellido', '$id_tipo_atencion', '$derivacion', '$comentarios', '$fecha_registro', '$usuario', '$id_profesion')";
 
 $query = mysqli_query($con, $sql);
 

@@ -12,6 +12,8 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 $sql = "SELECT 
             p.id_evaluacion, 
             p.rut, 
+            p.nombre,
+            p.apellido,
             p.derivacion, 
             p.comentarios, 
             p.fecha_registro, 
@@ -82,7 +84,7 @@ $query = mysqli_query($con, $sql);
                         <input type="text" 
                         class="form-control border-start-0 ps-0 shadow-none" 
                         id="buscador" 
-                        placeholder="Buscador de prestaciones..."
+                        placeholder="Buscador de prestaciones por: Rut, Nombre, Apellido, Correo"
                         autocomplete="off">
                         <button class="btn btn-outline-danger" type="button" id="btn-limpiar" style="display: none;">
                             <i class="fas fa-times"></i> Limpiar
@@ -105,6 +107,8 @@ $query = mysqli_query($con, $sql);
             <thead class="table-dark">
                 <tr>
                     <th>Rut</th>
+                    <th>Nombres</th>
+                    <th>Apellidos</th>
                     <th>Tipo Atención</th>
                     <th>Derivación</th>
                     <th>Comentarios</th>
@@ -118,6 +122,8 @@ $query = mysqli_query($con, $sql);
                 <?php while($row = mysqli_fetch_array($query)): ?>
                 <tr class="paciente-row">
                     <td><?=$row['rut']?></td>
+                    <td><?=$row['nombre']?></td>
+                    <td><?=$row['apellido']?></td>
                     <td><?=$row['tipo_atencion']?></td>
                     <td><?=$row['derivacion']?></td>
                     <td><?=$row['comentarios']?></td>

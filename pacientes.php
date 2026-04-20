@@ -83,7 +83,7 @@ $query2= mysqli_query($con, $sql2);
                         <input type="text" 
                         class="form-control border-start-0 ps-0 shadow-none" 
                         id="buscador" 
-                        placeholder="Buscar por pacientes..."
+                        placeholder="Buscar pacientes por: Rut, Nombre, Apellido, Correo"
                         autocomplete="off">
                         <button class="btn btn-outline-danger" type="button" id="btn-limpiar" style="display: none;">
                             <i class="fas fa-times"></i> Limpiar
