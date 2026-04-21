@@ -1,0 +1,45 @@
+<?php
+
+session_start();
+
+
+
+
+include("conexion/Conexion.php");
+$con = connection();
+
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header("Location: index.php");
+    exit;
+}
+
+
+
+?>
+
+
+<DOCTYPE html></DOCTYPE>
+<html>
+    <head>
+         <link rel="stylesheet" href="css/otro.css">
+         <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prestaciones</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+    </head>
+    <body>
+       
+          <a href="estadistica.php" class="btn btn-primary">
+            <i class="fas fa-home btn-icon">Volver</i>
+             </a>
+           <iframe title="clinica_sesiones" width="600" height="373.5" src="https://app.powerbi.com/view?r=eyJrIjoiNDdmMjRlNTEtMzU3Yy00N2FmLTg0NmMtN2JmZjA4YzAxMjAzIiwidCI6ImY0MDczNmRlLWI3YjYtNDI3Yi04YzMwLTAyODE1YmNhMjZiOSIsImMiOjR9" frameborder="0" allowFullScreen="true"></iframe>
+
+         
+      
+        </div>
+       
+    </body>
+</html>
