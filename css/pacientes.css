@@ -181,18 +181,3 @@ body {
         margin: 10px !important;
     }
 }
-/*centramos el boton de excel*/
-.}excel-btn-container {
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100% !important;
-    height: 0 !important;
-    /* No ocupa espacio, no se mueve */
-    z-index: 2000000 !important;
-    /* Por encima de absolutamente todo */
-    pointer-events: none !important;
-     display: flex;
-    align-items: center;
-    justify-content: center;
-}

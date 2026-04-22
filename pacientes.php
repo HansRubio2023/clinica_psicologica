@@ -31,6 +31,8 @@ $query2= mysqli_query($con, $sql2);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" href="css/boton.css">
     
     <style>
         /* CSS necesario para el buscador */
@@ -60,14 +62,16 @@ $query2= mysqli_query($con, $sql2);
             <i class="fas fa-sign-out-alt btn-icon"></i> Cerrar Sesión
         </a>
 
-      
-        <a id="excel" href="excel_pacientes.php" class="btn btn-success menu-btn">
-            <i class="fas fa-file-excel btn-icon"></i> Exportar Excel
-        </a>
+        <div class="text-center mb-4">
+            <a id="excel-btn" href="excel_pacientes.php" class="btn btn-success" style="pointer-events: auto;"!important; paadding: 10px 20px; font-family: 'poppins', sans-serif; font-size: 18px;">
+                <i class="fas fa-file-excel"></i> Descargar Excel
+            </a>
+        </div>
+       
     </div>    
     
     <div class="menu-card mx-auto" style="max-width: 1400px;">
-        <i class="menu-title text-center mb-4" >Pacientes</i>   
+        <h1 class="menu-title text-center mb-4" >Pacientes</h1>   
        
                     <?php
             if(isset($_GET['error'])) {
