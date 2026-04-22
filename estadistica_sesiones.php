@@ -33,7 +33,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     <body>
        
           <a href="estadistica.php" class="btn btn-primary">
-            <i class="fas fa-home btn-icon">Volver</i>
+           <i class='fas fa-angle-double-left'>Volver</i>
              </a>
            <iframe title="clinica_sesiones" width="600" height="373.5" src="https://app.powerbi.com/view?r=eyJrIjoiNDdmMjRlNTEtMzU3Yy00N2FmLTg0NmMtN2JmZjA4YzAxMjAzIiwidCI6ImY0MDczNmRlLWI3YjYtNDI3Yi04YzMwLTAyODE1YmNhMjZiOSIsImMiOjR9" frameborder="0" allowFullScreen="true"></iframe>
 

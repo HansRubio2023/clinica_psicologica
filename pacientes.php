@@ -59,10 +59,15 @@ $query2= mysqli_query($con, $sql2);
         <a id="cerrar_sesion" href="logout.php" class="btn btn-logout menu-btn">
             <i class="fas fa-sign-out-alt btn-icon"></i> Cerrar Sesión
         </a>
+
+      
+        <a id="excel" href="excel_pacientes.php" class="btn btn-success menu-btn">
+            <i class="fas fa-file-excel btn-icon"></i> Exportar Excel
+        </a>
     </div>    
     
     <div class="menu-card mx-auto" style="max-width: 1400px;">
-        <h1 class="menu-title text-center mb-4" >Pacientes</h1>   
+        <i class="menu-title text-center mb-4" >Pacientes</i>   
        
                     <?php
             if(isset($_GET['error'])) {

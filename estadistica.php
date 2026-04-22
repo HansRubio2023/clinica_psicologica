@@ -26,7 +26,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menú Principal</title>
+    <title>Estadisticas</title>
     <link rel="stylesheet" href="css/menu.css">
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -58,7 +58,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
              <a href="estadistica_prestaciones.php" class="btn btn-pacientes menu-btn" style=" font-family: 'poppins', sans-serif;
     font-size: 20px;">
                 <i class="fa fa-stethoscopefas fa-file-medical btn-icon"></i>
-               Estadisticas de Prestaciones
+                Estadisticas de Prestaciones
             </a>
              <a href="estadistica_sesiones.php" class="btn btn-pacientes menu-btn"style=" font-family: 'poppins', sans-serif;
     font-size: 20px;">
