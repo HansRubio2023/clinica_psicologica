@@ -158,7 +158,7 @@ $query = mysqli_query($con, $sql);
                                 </label>
                                 <input type="tel" class="form-control" name="celular" 
                                        value="<?php echo isset($_POST['celular']) ? $_POST['celular'] : ''; ?>"
-                                       placeholder="987654321" maxlength="15"required>
+                                       placeholder="987654321" maxlength="15"required oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                             </div>
 
                             <!-- Email -->
