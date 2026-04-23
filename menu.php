@@ -83,7 +83,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
                 </a>
             <?php endif; ?>
                 <div class=row justify-content-center>
-    <div  style="position: absolute; top: -50px;left: -400px;" >
+    <div  style="position: absolute; top: -50px;left: -200px;" >
     <h2 style="color: white;"> <?php  echo $_SESSION['usuario']; ?></h2>
 
         

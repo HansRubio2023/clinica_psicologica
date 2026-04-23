@@ -5,6 +5,10 @@ header('Content-Disposition: attachment; filename=sesiones.xls');
 
 require_once('conexion/conexion.php');
 $con = connection();
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header("Location: index.php");
+    exit;
+}
 mysqli_set_charset($con,'utf8');
 mysqli_query($con, "SET NAMES 'utf8'");
 

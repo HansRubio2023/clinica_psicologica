@@ -38,7 +38,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 </head>
 <body>
     <div class="menu-container">
-       <a id="inicio" href="menu.php" class="btn btn-inicio menu-btn">
+          <a id="inicio" href="menu.php" class="btn btn-inicio menu-btn">
                 <i class="fas fa-home btn-icon"></i>
                 Inicio
             </a>
@@ -49,19 +49,37 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
             </a>
     </div>    
         <div class="menu-card">
+            <h1 class="menu-title">
+                <center>
+                    <img src="img/unap_positivo.png" alt="Logo" class="logo" style="width: 120px; height: auto;"><br>
+                Estadisticas Clinica Psicologica
+                </center>
+            </h1>
             
             <a href="estadistica_pacientes.php" class="btn btn-pacientes menu-btn" style=" font-family: 'poppins', sans-serif;
     font-size: 20px;">
                 <i class="fas fa-users btn-icon"></i>
-               Estadisticas de Pacientes
+                Estadisticas Pacientes
             </a>
              <a href="estadistica_prestaciones.php" class="btn btn-pacientes menu-btn" style=" font-family: 'poppins', sans-serif;
     font-size: 20px;">
                 <i class="fa fa-stethoscopefas fa-file-medical btn-icon"></i>
-                Estadisticas de Prestaciones
+               Estadisticas Prestaciones
             </a>
              <a href="estadistica_sesiones.php" class="btn btn-pacientes menu-btn"style=" font-family: 'poppins', sans-serif;
     font-size: 20px;">
                 <i class="fas fa-calendar-check btn-icon"></i>
-               Estadisticas de Sesiones
+                Estadisticas Sesiones
             </a>
+                <div class=row justify-content-center>
+    <div  style="position: absolute; top: -50px;left: -150px;" >
+    <h2 style="color: white;"> <?php  echo $_SESSION['usuario']; ?></h2>
+
+        
+</div>
+
+
+    </div>
+</div>  
+</body>
+</html>
