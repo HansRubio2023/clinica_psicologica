@@ -71,10 +71,11 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
                 <i class="fas fa-calendar-check btn-icon"></i>
                 Sesiones
             </a>
-             <a href="estadistica.php" class="btn btn-pacientes menu-btn" style=" font-family: 'poppins', sans-serif;
+             <a href="estadistica.php" class="btn btn-pacientes menu-btn" style="font-family: 'poppins', sans-serif;
     font-size: 20px;">
                 <i class="fas fa-users btn-icon"></i>
                 Estadisticas
+             </a>
             <?php if ($_SESSION['rol'] === 'admin'): ?>
                 <a href="usuarios.php" class="btn btn-pacientes menu-btn"style=" font-family: 'poppins', sans-serif;
     font-size: 20px;">  

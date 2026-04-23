@@ -1,9 +1,10 @@
 <?php 
+session_start();
 header('Content-type:application/xls; charset=UTF-8');
 header('Content-Disposition: attachment; filename=prestaciones.xls');
 
 
-require_once('conexion/conexion.php');
+include('conexion/conexion.php');
 $con = connection();
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     header("Location: index.php");
