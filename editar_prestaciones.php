@@ -89,7 +89,7 @@ if (isset($_GET['id_evaluacion'])) {
                                 <label class="form-label fw-bold">
                                     <i class="fas fa-id-card text-primary"></i> RUT *
                                 </label>
-                                <input type="text" class="form-control" name="rut" value="<?= $row['rut'] ?>" required>
+                                <input type="text" class="form-control" name="rut" value="<?= $row['rut'] ?>" required >
                             </div>
 
                               <!-- Nombre -->
@@ -116,7 +116,6 @@ if (isset($_GET['id_evaluacion'])) {
                                     <i class="fas fa-users text-primary"></i> Tipo Atención 
                                 </label>
                                 <select class="form-select" name="id_tipo_atencion">
-                                    <option value="">Seleccione un rango etario</option>
                                     <option value="1" <?php echo ($row['id_tipo_atencion'] == '1') ? 'selected' : ''; ?>>Terapia individual</option>
                                     <option value="2" <?php echo ($row['id_tipo_atencion'] == '2') ? 'selected' : ''; ?>>Acompañamiento terapéutico</option>
                                 </select>

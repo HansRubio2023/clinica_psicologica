@@ -91,7 +91,7 @@ if (isset($_GET['id_paciente'])) {
                                 <label class="form-label fw-bold">
                                     <i class="fas fa-id-card text-primary"></i> RUT *
                                 </label>
-                                <input type="text" class="form-control" name="rut" value="<?= $row['rut'] ?>" required>
+                                <input type="text" class="form-control" name="rut" value="<?= $row['rut'] ?>"  required>
                             </div>
 
                             <!-- Nombre -->

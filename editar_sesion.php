@@ -91,7 +91,7 @@ if (isset($_GET['id_sesion'])) {
                                 <label class="form-label fw-bold">
                                     <i class="fas fa-id-card text-primary"></i> RUT *
                                 </label>
-                                <input type="text" class="form-control" name="rut" value="<?= $row['rut'] ?>" required>
+                                <input type="text" class="form-control" name="rut" value="<?= $row['rut'] ?>" required readonly>
                             </div>
                         </div>
                             <!-- Num Sesión -->
@@ -100,7 +100,7 @@ if (isset($_GET['id_sesion'])) {
                                     <i class="fas fa-id-card text-primary"></i> Número de Sesión *
                                 </label>
                                 <input type="number" class="form-control" id="numero_sesion" name="numero_sesion" 
-                                       min="1"  value="<?= $row['numero_sesion'] ?>" required>
+                                       min="1"  value="<?= $row['numero_sesion'] ?>" required readonly>
                             </div>
 
                             <!-- Fecha Sesión -->
