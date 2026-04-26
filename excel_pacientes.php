@@ -39,7 +39,7 @@ echo "\xEF\xBB\xBF";
         <th>Comentarios</th>
         <th>Fecha Registro</th>
         <th>Estado</th>
-        <th>Rango de edad</th>
+        <th>Rango Etario</th>
         <th>Usuario Registro</th>
     </tr>
     <?php 
