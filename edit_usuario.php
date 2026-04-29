@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-include("../clinica_psicologica/conexion/conexion.php");
+include("conexion/conexion.php");
 
 $con = connection();
 

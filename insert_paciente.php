@@ -1,7 +1,6 @@
 <?php
 session_start();
-
-include("../clinica_psicologica/conexion/conexion.php");
+include("conexion/conexion.php");
 $con = connection();
 
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
