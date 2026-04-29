@@ -125,10 +125,12 @@ $query = mysqli_query($con, $sql);
                 <td><?=$row['fecha_sesion']?></td>
                 <td><?=$row['comentarios']?></td>                
                 <td>
-                    <?php if($row['asiste'] == '1'): ?>
-                        <span class="badge bg-success">Sí</span>
-                    <?php else: ?>
+                    <?php if($row['asiste'] == 'Si'): ?>
+                        <span class="badge bg-success">Si</span>
+                    <?php elseif($row['asiste'] == 'No'): ?>
                         <span class="badge bg-danger">No</span>
+                    <?php else: ?>
+                        <span class="badge bg-warning">Reagendar</span>
                     <?php endif; ?>
                 </td>
                 <td><?=$row['usuario']?></td>

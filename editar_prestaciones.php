@@ -122,13 +122,37 @@ if (isset($_GET['id_evaluacion'])) {
                             </div>
 
                             <!-- Derivación -->
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label fw-bold">
-                                    <i class="fas fa-user text-primary"></i> Derivación *
-                                </label>
-                                <input type="text" class="form-control" name="derivacion" 
-                                value="<?= $row['derivacion'] ?>" required>
-                            </div>
+                             <div class="col-12 mb-3">
+                            <label class="form-label fw-bold">
+                                <i class="fas fa-user-tag text-primary"></i> Derivación *
+                            </label>
+                       <select class="form-select" name="id_derivacion" id="selectDerivacion" required>
+                        <option value="">-- Seleccione --</option>
+                        <?php
+                         $sql_der = "SELECT * FROM tipo_derivacion";
+                         $query_der = mysqli_query($con, $sql_der);
+                         while($der = mysqli_fetch_assoc($query_der)) {
+                        echo "<option value='{$der['id_derivacion']}'>{$der['nombre_institucion_derivacion']}</option>";
+                         }
+                         ?>
+                         <option value="nueva">+ Agregar nueva derivacion</option>
+                        </select>
+
+                        <input type="text" class="form-control mt-2 d-none" id="nuevaDerivacion"
+                         name="nueva_derivacion" placeholder="Nueva derivación" maxlength="200">
+                        </div>
+                        <script>
+                            document.getElementById('selectDerivacion').addEventListener('change', function() {
+                                const nuevaDerivacionInput = document.getElementById('nuevaDerivacion');
+                                if (this.value === 'nueva') {
+                                    nuevaDerivacionInput.classList.remove('d-none');
+                                    nuevaDerivacionInput.setAttribute('required', 'required');
+                                } else {
+                                    nuevaDerivacionInput.classList.add('d-none');
+                                    nuevaDerivacionInput.removeAttribute('required');
+                                }
+                            });
+                        </script>
                             
                             <!--Comentarios -->
                             <div class="mb-3">

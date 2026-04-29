@@ -19,11 +19,13 @@ $sql = "SELECT
             p.fecha_registro, 
             p.usuario,
             r.nombre_tipo_atencion AS tipo_atencion, 
-            z.Profesion AS tipo_profesion
-        FROM evaluaciones p
+            z.Profesion AS tipo_profesion,
+            d.nombre_institucion_derivacion AS nombre_derivacion
+       FROM evaluaciones p
         LEFT JOIN pacientes e ON p.rut = e.rut
         LEFT JOIN tipo_atencion r ON p.id_tipo_atencion = r.id_atencion 
         LEFT JOIN tipo_profesion z ON p.id_profesion = z.id_profesion
+        LEFT JOIN tipo_derivacion d ON p.derivacion = d.ID_derivacion
         ORDER BY p.id_evaluacion DESC";
 
 $query = mysqli_query($con, $sql);
@@ -125,7 +127,7 @@ $query = mysqli_query($con, $sql);
                     <td><?=$row['nombre']?></td>
                     <td><?=$row['apellido']?></td>
                     <td><?=$row['tipo_atencion']?></td>
-                    <td><?=$row['derivacion']?></td>
+                    <td><?=$row['nombre_derivacion']?></td>
                     <td><?=$row['comentarios']?></td>
                     <td><?=$row['fecha_registro']?></td>
                     <td><?=$row['tipo_profesion']?></td>

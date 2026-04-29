@@ -259,8 +259,10 @@ $query = mysqli_query($con, $sql);
                                 <i class="fas fa-check text-primary"></i> Asiste    
                             </label>
                             <select class="form-select" name="asiste">
-                                <option value="Sí" <?php echo (isset($_POST['asiste']) && $_POST['asiste'] == 'Sí') ? 'selected' : ''; ?>>Sí</option>
+                                <option value="Si" <?php echo (isset($_POST['asiste']) && $_POST['asiste'] == 'Si') ? 'selected' : ''; ?>>Sí</option>
+                               
                                 <option value="No" <?php echo (isset($_POST['asiste']) && $_POST['asiste'] == 'No') ? 'selected' : ''; ?>>No</option>
+                                 <option value="Reagendar" <?php echo (isset($_POST['asiste']) && $_POST['asiste'] == 'Reagendar') ? 'selected' : ''; ?>>Reagendar</option>
                             </select>
                         </div>
 
