@@ -4,12 +4,12 @@
 function connection()
 {
     //Creamos las variables de conexión y los parametros
-    $host="127.0.0.1";
-    $user="root";
-    $pass="1234";
+    $host='127.0.0.1';
+    $user='root';
+    $pass='1234';
 
     // Vamos a definir una variable para la base de datos
-    $bd="clinica_psicologica";
+    $bd='clinica_psicologica';
 
     //Definir una variable para la conexión a la base de datos
     //Definir el método de conexión mysqli_connect()

@@ -13,21 +13,22 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 mysqli_set_charset($con,'utf8');
 mysqli_query($con, "SET NAMES 'utf8'");
 
-$sql = "SELECT 
-            p.id_evaluacion, 
-            p.rut, 
+$sql = "SELECT
+            p.id_evaluacion,
+            p.rut,
             p.nombre,
             p.apellido,
-            p.derivacion, 
-            p.comentarios, 
-            p.fecha_registro, 
+            p.comentarios,
+            p.fecha_registro,
             p.usuario,
-            r.nombre_tipo_atencion AS tipo_atencion, 
-            z.Profesion AS tipo_profesion
+            r.nombre_tipo_atencion AS tipo_atencion,
+            z.Profesion AS tipo_profesion,
+            d.nombre_institucion_derivacion AS nombre_derivacion
         FROM evaluaciones p
         LEFT JOIN pacientes e ON p.rut = e.rut
-        LEFT JOIN tipo_atencion r ON p.id_tipo_atencion = r.id_atencion 
+        LEFT JOIN tipo_atencion r ON p.id_tipo_atencion = r.id_atencion
         LEFT JOIN tipo_profesion z ON p.id_profesion = z.id_profesion
+        LEFT JOIN tipo_derivacion d ON p.derivacion = d.id_derivacion
         ORDER BY p.id_evaluacion DESC";
 
 $result=mysqli_query($con,$sql);
@@ -57,7 +58,7 @@ echo "\xEF\xBB\xBF";
                         <td><?=$row['nombre']?></td>
                         <td><?=$row['apellido']?></td>
                         <td><?=$row['tipo_atencion']?></td>
-                        <td><?=$row['derivacion']?></td>
+                        <td><?=$row['nombre_derivacion']?></td>
                         <td><?=$row['comentarios']?></td>
                         <td><?=$row['fecha_registro']?></td>
                         <td><?=$row['tipo_profesion']?></td>

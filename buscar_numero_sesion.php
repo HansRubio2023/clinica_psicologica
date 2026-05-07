@@ -1,5 +1,5 @@
-<?php
-include("../clinica_psicologica/conexion/conexion.php");
+﻿<?php
+include("conexion/conexion.php");
 $con = connection();
 
 if (isset($_POST['rut'])) {

@@ -1,7 +1,7 @@
-<?php
+﻿<?php
 session_start();
 
-include("../clinica_psicologica/conexion/conexion.php");
+include("conexion/conexion.php");
 $con = connection();
 
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
@@ -91,7 +91,7 @@ if (isset($_GET['id_sesion'])) {
                                 <label class="form-label fw-bold">
                                     <i class="fas fa-id-card text-primary"></i> RUT *
                                 </label>
-                                <input type="text" class="form-control" name="rut" value="<?= $row['rut'] ?>" required>
+                                <input type="text" class="form-control" name="rut" value="<?= $row['rut'] ?>" required readonly>
                             </div>
                         </div>
                             <!-- Num Sesión -->
@@ -147,8 +147,9 @@ if (isset($_GET['id_sesion'])) {
                                 <i class="fas fa-check text-primary"></i> Asiste    
                             </label>
                             <select class="form-select" name="asiste">
-                                    <option value="1" <?php echo ($row['asiste'] == '1') ? 'selected' : ''; ?>>Sí</option>
-                                    <option value="2" <?php echo ($row['asiste'] == '2') ? 'selected' : ''; ?>>No</option>
+                                    <option value="Si" <?php echo ($row['asiste'] == 'Si') ? 'selected' : ''; ?>>Sí</option>
+                                    <option value="No" <?php echo ($row['asiste'] == 'No') ? 'selected' : ''; ?>>No</option>
+                                    <option value="Reagendar" <?php echo ($row['asiste'] == 'Reagendar') ? 'selected' : ''; ?>>Reagendar</option>
                                 </select>
                         </div>
 

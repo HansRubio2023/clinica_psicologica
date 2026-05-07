@@ -1,7 +1,7 @@
-<?php
+﻿<?php
 session_start();
 
-include("../clinica_psicologica/conexion/conexion.php");
+include("conexion/conexion.php");
 $con = connection();
 
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
@@ -100,7 +100,7 @@ $query2= mysqli_query($con, $sql2);
                     </div>
                 </div>
                 <div class="col-md-4 text-end">
-                    <a href="../clinica_psicologica/nuevo_paciente.php" class="btn btn-success btn-lg" style=" font-family: 'poppins', sans-serif;
+                    <a href="nuevo_paciente.php" class="btn btn-success btn-lg" style=" font-family: 'poppins', sans-serif;
     font-size: 20px;">
                         <i class="fas fa-plus"></i> Nuevo Paciente
                     </a>
@@ -137,7 +137,7 @@ $query2= mysqli_query($con, $sql2);
                     <td><?=$row['celular']?></td>
                     <td><?=$row['comentarios']?></td>
                     <td><?=$row['fecha_registro']?></td>
-                    <td><?=$row['nombre_estado']?></span></td>
+                    <td><?=$row['nombre_estado']?></td>
                     <td><?=$row['nombre_rango']?></td>
                     <td><?=$row['usuario']?></td>
                     <td>

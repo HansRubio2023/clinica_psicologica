@@ -1,7 +1,7 @@
-<?php
+﻿<?php
 session_start();
 
-include("../clinica_psicologica/conexion/conexion.php");
+include("conexion/conexion.php");
 
 $con = connection();
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
@@ -133,6 +133,7 @@ $query = mysqli_query($con, $sql);
                                        value="<?php echo isset($_POST['apellido']) ? $_POST['apellido'] : ''; ?>"
                                        maxlength="50" required>
                             </div>
+
                         <!-- Tipo Atención -->
                         <div class="col-9 mb-3">
                             <label class="form-label fw-bold">
@@ -149,10 +150,32 @@ $query = mysqli_query($con, $sql);
                             <label class="form-label fw-bold">
                                 <i class="fas fa-user-tag text-primary"></i> Derivación *
                             </label>
-                            <input type="text" class="form-control" name="derivacion"
-                                value="<?php echo isset($_POST['derivacion']) ? $_POST['derivacion'] : ''; ?>"
-                                maxlength="200" required>
+                            <select class="form-select" name="id_derivacion" id="selectDerivacion" required>
+                                <option value="">-- Seleccione --</option>
+                                <?php
+                                    $sql_der = "SELECT * FROM tipo_derivacion";
+                                    $query_der = mysqli_query($con, $sql_der);
+                                    while($der = mysqli_fetch_assoc($query_der)) {
+                                        echo "<option value='{$der['id_derivacion']}'>{$der['nombre_institucion_derivacion']}</option>";
+                                    }
+                                ?>
+                                <option value="nueva">+ Agregar nueva derivacion</option>
+                            </select>
+                            <input type="text" class="form-control mt-2 d-none" id="nuevaDerivacion"
+                                name="nueva_derivacion" placeholder="Nueva derivación" maxlength="200">
                         </div>
+                        <script>
+                            document.getElementById('selectDerivacion').addEventListener('change', function() {
+                                const nuevaDerivacionInput = document.getElementById('nuevaDerivacion');
+                                if (this.value === 'nueva') {
+                                    nuevaDerivacionInput.classList.remove('d-none');
+                                    nuevaDerivacionInput.setAttribute('required', 'required');
+                                } else {
+                                    nuevaDerivacionInput.classList.add('d-none');
+                                    nuevaDerivacionInput.removeAttribute('required');
+                                }
+                            });
+                        </script>
 
                         <!-- Comentarios -->
                         <div class="mb-3">

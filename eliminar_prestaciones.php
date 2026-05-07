@@ -1,8 +1,12 @@
-<?php
-// Incluye tu conexión (asegúrate de que el nombre sea correcto)
-
-include("../clinica_psicologica/conexion/conexion.php"); 
+﻿<?php
+session_start();
+include("conexion/conexion.php");
 $con = connection();
+
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header("Location: index.php");
+    exit;
+}
 
 if (isset($_GET['id_evaluacion'])) {
     $id = $_GET['id_evaluacion'];

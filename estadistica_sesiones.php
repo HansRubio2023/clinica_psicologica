@@ -5,7 +5,7 @@ session_start();
 
 
 
-include("conexion/Conexion.php");
+include("conexion/conexion.php");
 $con = connection();
 
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
@@ -18,7 +18,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 ?>
 
 
-<DOCTYPE html></DOCTYPE>
+<!DOCTYPE html>
 <html>
     <head>
          <link rel="stylesheet" href="css/otro.css">

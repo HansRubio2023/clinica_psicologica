@@ -5,7 +5,7 @@ session_start();
 
 
 
-include("conexion/Conexion.php");
+include("conexion/conexion.php");
 $con = connection();
 
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {

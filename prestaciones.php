@@ -1,7 +1,7 @@
-<?php
+﻿<?php
 session_start();
 
-include("../clinica_psicologica/conexion/conexion.php");
+include("conexion/conexion.php");
 $con = connection();
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     header("Location: index.php");
@@ -9,21 +9,23 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 }
 
 // Cambiamos INNER JOIN por LEFT JOIN para asegurar que se muestren los datos
-$sql = "SELECT 
-            p.id_evaluacion, 
-            p.rut, 
+$sql = "SELECT
+            p.id_evaluacion,
+            p.rut,
             p.nombre,
             p.apellido,
-            p.derivacion, 
-            p.comentarios, 
-            p.fecha_registro, 
+            p.derivacion,
+            p.comentarios,
+            p.fecha_registro,
             p.usuario,
-            r.nombre_tipo_atencion AS tipo_atencion, 
-            z.Profesion AS tipo_profesion
+            r.nombre_tipo_atencion AS tipo_atencion,
+            z.Profesion AS tipo_profesion,
+            d.nombre_institucion_derivacion AS nombre_derivacion
         FROM evaluaciones p
         LEFT JOIN pacientes e ON p.rut = e.rut
-        LEFT JOIN tipo_atencion r ON p.id_tipo_atencion = r.id_atencion 
+        LEFT JOIN tipo_atencion r ON p.id_tipo_atencion = r.id_atencion
         LEFT JOIN tipo_profesion z ON p.id_profesion = z.id_profesion
+        LEFT JOIN tipo_derivacion d ON p.derivacion = d.id_derivacion
         ORDER BY p.id_evaluacion DESC";
 
 $query = mysqli_query($con, $sql);
@@ -99,7 +101,7 @@ $query = mysqli_query($con, $sql);
                     </div>
                 </div>
                 <div class="col-md-4 text-end">
-                    <a href="../clinica_psicologica/nueva_prestacion.php" class="btn btn-success btn-lg"style=" font-family: 'poppins', sans-serif;
+                    <a href="nueva_prestacion.php" class="btn btn-success btn-lg"style=" font-family: 'poppins', sans-serif;
     font-size: 20px;">
                         <i class="fas fa-plus"></i> Nueva Prestación
                     </a>
@@ -132,7 +134,7 @@ $query = mysqli_query($con, $sql);
                     <td><?=$row['nombre']?></td>
                     <td><?=$row['apellido']?></td>
                     <td><?=$row['tipo_atencion']?></td>
-                    <td><?=$row['derivacion']?></td>
+                    <td><?=$row['nombre_derivacion']?></td>
                     <td><?=$row['comentarios']?></td>
                     <td><?=$row['fecha_registro']?></td>
                     <td><?=$row['tipo_profesion']?></td>

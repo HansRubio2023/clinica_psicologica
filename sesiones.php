@@ -1,7 +1,7 @@
-<?php
+﻿<?php
 session_start();
 
-include("../clinica_psicologica/conexion/conexion.php");
+include("conexion/conexion.php");
 $con = connection();
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     header("Location: index.php");
@@ -96,7 +96,7 @@ $query = mysqli_query($con, $sql);
                     </div>
                 </div>
                 <div class="col-md-4 text-end">
-                    <a href="../clinica_psicologica/nueva_sesion.php" class="btn btn-success btn-lg"style=" font-family: 'poppins', sans-serif;
+                    <a href="nueva_sesion.php" class="btn btn-success btn-lg"style=" font-family: 'poppins', sans-serif;
     font-size: 20px;">
                         <i class="fas fa-plus"></i> Nueva Sesión
                     </a>
@@ -131,10 +131,12 @@ $query = mysqli_query($con, $sql);
                 <td><?=$row['fecha_sesion']?></td>
                 <td><?=$row['comentarios']?></td>                
                 <td>
-                    <?php if($row['asiste'] == '1'): ?>
+                    <?php if($row['asiste'] == 'Si'): ?>
                         <span class="badge bg-success">Sí</span>
-                    <?php else: ?>
+                    <?php elseif($row['asiste'] == 'No'): ?>
                         <span class="badge bg-danger">No</span>
+                    <?php else: ?>
+                        <span class="badge bg-warning">Reagendar</span>
                     <?php endif; ?>
                 </td>
                 <td><?=$row['usuario']?></td>

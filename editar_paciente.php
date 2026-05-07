@@ -1,7 +1,7 @@
-<?php
+﻿<?php
 session_start();
 
-include("../clinica_psicologica/conexion/conexion.php");
+include("conexion/conexion.php");
 $con = connection();
 
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
@@ -87,12 +87,73 @@ if (isset($_GET['id_paciente'])) {
                         <div class="row">
                             <!-- RUT -->
                             <input type="hidden" name="id_paciente" value="<?= $row['id_paciente'] ?>"required>
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label fw-bold">
-                                    <i class="fas fa-id-card text-primary"></i> RUT *
-                                </label>
-                                <input type="text" class="form-control" name="rut" value="<?= $row['rut'] ?>" required>
-                            </div>
+<div class="col-md-6 mb-3">
+    <label class="form-label fw-bold">
+        <i class="fas fa-id-card text-primary"></i> RUT *
+    </label>
+    <input type="text" class="form-control" id="rut" name="rut"
+        value="<?= $row['rut'] ?>" placeholder="12.345.678-9" maxlength="12" required>
+    <div id="rut-error" class="invalid-feedback">RUT inválido.</div>
+</div>
+<script>
+    function formatearRut(rut) {
+        let valor = rut.replace(/\./g, '').replace(/-/g, '').trim().toUpperCase();
+        if (valor.length < 2) return valor;
+        let dv = valor.slice(-1);
+        let cuerpo = valor.slice(0, -1).replace(/\D/g, '');
+        let cuerpoFormateado = '';
+        let i = cuerpo.length;
+        let grupo = 0;
+        while (i > 0) {
+            let desde = Math.max(0, i - 3);
+            cuerpoFormateado = cuerpo.slice(desde, i) + (grupo > 0 ? '.' : '') + cuerpoFormateado;
+            i = desde;
+            grupo++;
+        }
+        return cuerpoFormateado + '-' + dv;
+    }
+
+    function fnValidarRut(rutCompleto) {
+        if (!/^[0-9]+[-][0-9kK]{1}$/.test(rutCompleto.replace(/\./g, ''))) return false;
+        let tmp = rutCompleto.split('-');
+        let digv = tmp[1];
+        let rut = tmp[0].replace(/\./g, '');
+        if (digv === 'K') digv = 'k';
+        return (fnDv(rut) == digv);
+    }
+
+    function fnDv(T) {
+        let M = 0, S = 1;
+        for (; T; T = Math.floor(T / 10))
+            S = (S + T % 10 * (9 - M++ % 6)) % 11;
+        return S ? S - 1 : 'k';
+    }
+
+    const rutInput = document.getElementById('rut');
+
+    rutInput.addEventListener('input', function(e) {
+        let raw = e.target.value.replace(/[^0-9kK]/g, '');
+        if (raw.length === 0) { e.target.value = ''; return; }
+        let formatted = raw.length > 1 ? formatearRut(raw) : raw;
+        e.target.value = formatted;
+
+        if (fnValidarRut(formatted)) {
+            e.target.setCustomValidity('');
+            e.target.classList.remove('is-invalid');
+            e.target.classList.add('is-valid');
+        } else {
+            e.target.setCustomValidity('RUT Inválido');
+            e.target.classList.add('is-invalid');
+            e.target.classList.remove('is-valid');
+        }
+    });
+
+    window.addEventListener('DOMContentLoaded', function() {
+        let raw = rutInput.value.replace(/[^0-9kK]/g, '');
+        if (raw.length > 1) rutInput.value = formatearRut(raw);
+        if (fnValidarRut(rutInput.value)) rutInput.classList.add('is-valid');
+    });
+</script>
 
                             <!-- Nombre -->
                             <div class="col-md-6 mb-3">
@@ -198,7 +259,7 @@ if (isset($_GET['id_paciente'])) {
                                 <label class="form-label">
                                     <i class="fas fa-user-tag text-primary"></i> Usuario
                                 </label>
-                                <input type="text" class="form-control" name="usuario" value=<?php echo $_SESSION['email']; ?>>
+                                <input type="text" class="form-control" name="usuario" value="<?php echo $_SESSION['email']; ?>">
                             </div>
 
                         <!-- BOTONES -->

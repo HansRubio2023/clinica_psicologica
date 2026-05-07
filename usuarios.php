@@ -1,7 +1,7 @@
 <?php 
 session_start();
 
-include("conexion/Conexion.php");
+include("conexion/conexion.php");
 
 $con = connection();
 
@@ -37,13 +37,12 @@ $query = mysqli_query($con, $sql);
             <i class="fas fa-sign-out-alt btn-icon"></i>
             Cerrar Sesión
         </a>
-    </div>   
     <div class="container mt-5">
 <h1 style="color: white; text-align: center;" >Panel de Usuarios</h1>
 <div class="d-flex justify-content-end mb-3">
     <a href="nuevo_usuario.php"class="btn btn-success btn-lg" style=" font-family: 'poppins', sans-serif;
     font-size: 20px;">
-         <i class="fas fa-plus" ></i> Nueva Sesión
+         <i class="fas fa-plus" ></i> Nuevo Usuario
     </a>
 </div>
 
@@ -61,7 +60,6 @@ $query = mysqli_query($con, $sql);
             <th>Acciones</th>
         </tr>
         </thead>
-    </thead>
     <tbody>
         <?php while($fila = mysqli_fetch_assoc($query)) { ?>
         <tr>
