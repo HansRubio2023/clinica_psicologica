@@ -62,6 +62,7 @@ $query = mysqli_query($con, $sql);
 
 if($query) {
     header("Location: pacientes.php");
+    exit();
 } else {
     echo "Error de SQL: " . mysqli_error($con);
 }

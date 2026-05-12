@@ -33,6 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
         }
         $query = mysqli_query($con, $sql);  if($query){
             Header("Location: usuarios.php");
+            exit();
         } else {
             header("Location: edit_usuario.php?id=$id&error=update_failed");
             exit();
