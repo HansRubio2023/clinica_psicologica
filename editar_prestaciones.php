@@ -37,7 +37,7 @@ if (isset($_GET['id_evaluacion'])) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-
+    <link href="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/css/tom-select.bootstrap5.min.css" rel="stylesheet">
     <style>
         .flatpickr-day.feriado {
             background-color: #dc3545 !important;
@@ -270,6 +270,13 @@ if (isset($_GET['id_evaluacion'])) {
 
 
     <!-- Bootstrap 5 JS -->
+     <script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
+     <script>
+    new TomSelect('#selectDerivacion', {
+        create: false,
+        sortField: { field: 'text', direction: 'asc' }
+    });
+</script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
