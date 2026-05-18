@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 session_start();
 
 include("conexion/conexion.php");
@@ -9,23 +9,23 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 }
 
 // Cambiamos INNER JOIN por LEFT JOIN para asegurar que se muestren los datos
-$sql = "SELECT 
-            p.id_evaluacion, 
-            p.rut, 
+$sql = "SELECT
+            p.id_evaluacion,
+            p.rut,
             p.nombre,
             p.apellido,
-            p.derivacion, 
-            p.comentarios, 
-            p.fecha_registro, 
+            p.derivacion,
+            p.comentarios,
+            p.fecha_registro,
             p.usuario,
-            r.nombre_tipo_atencion AS tipo_atencion, 
+            r.nombre_tipo_atencion AS tipo_atencion,
             z.Profesion AS tipo_profesion,
             d.nombre_institucion_derivacion AS nombre_derivacion
-       FROM evaluaciones p
+        FROM evaluaciones p
         LEFT JOIN pacientes e ON p.rut = e.rut
-        LEFT JOIN tipo_atencion r ON p.id_tipo_atencion = r.id_atencion 
+        LEFT JOIN tipo_atencion r ON p.id_tipo_atencion = r.id_atencion
         LEFT JOIN tipo_profesion z ON p.id_profesion = z.id_profesion
-        LEFT JOIN tipo_derivacion d ON p.derivacion = d.ID_derivacion
+        LEFT JOIN tipo_derivacion d ON p.derivacion = d.id_derivacion
         ORDER BY p.id_evaluacion DESC";
 
 $query = mysqli_query($con, $sql);
@@ -42,6 +42,7 @@ $query = mysqli_query($con, $sql);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/boton.css">
     
     <style>
         /* CSS necesario para el buscador */
@@ -70,6 +71,12 @@ $query = mysqli_query($con, $sql);
         <a id="cerrar_sesion" href="logout.php" class="btn btn-logout menu-btn">
             <i class="fas fa-sign-out-alt btn-icon"></i> Cerrar Sesión
         </a>
+
+          <div class="text-center mb-4">
+            <a id="excel-btn" href="excel_prestaciones.php" class="btn btn-success" style="pointer-events: auto;"!important; paadding: 10px 20px; font-family: 'poppins', sans-serif; font-size: 18px;">
+                <i class="fas fa-file-excel"></i> Descargar Excel
+            </a>
+        </div>
     </div>    
     
     <div class="menu-card mx-auto" style="max-width: 1400px;">
@@ -94,7 +101,7 @@ $query = mysqli_query($con, $sql);
                     </div>
                 </div>
                 <div class="col-md-4 text-end">
-                    <a href="../clinica_psicologica/nueva_prestacion.php" class="btn btn-success btn-lg"style=" font-family: 'poppins', sans-serif;
+                    <a href="nueva_prestacion.php" class="btn btn-success btn-lg"style=" font-family: 'poppins', sans-serif;
     font-size: 20px;">
                         <i class="fas fa-plus"></i> Nueva Prestación
                     </a>

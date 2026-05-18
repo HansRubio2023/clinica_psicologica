@@ -1,8 +1,12 @@
-<?php
-// Incluye tu conexión (asegúrate de que el nombre sea correcto)
-
+﻿<?php
+session_start();
 include("conexion/conexion.php");
 $con = connection();
+
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header("Location: index.php");
+    exit;
+}
 
 if (isset($_GET['id_paciente'])) {
     $id = $_GET['id_paciente'];
@@ -12,7 +16,7 @@ if (isset($_GET['id_paciente'])) {
 
     if($resultado['total']> 0){
         header("location: pacientes.php?error=tiene_sesiones");
-
+        exit;
     }
 
     // Usamos una sentencia preparada para proteger la base de datos

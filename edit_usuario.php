@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 session_start();
 
 include("conexion/conexion.php");
@@ -33,6 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
         }
         $query = mysqli_query($con, $sql);  if($query){
             Header("Location: usuarios.php");
+            exit();
         } else {
             header("Location: edit_usuario.php?id=$id&error=update_failed");
             exit();
@@ -98,9 +99,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
                         <label for="rol" class="form-label"></label>
                         <i class="fas fa-id-badge text-primary"></i> Rol
                         <select class="form-select" id="rol" name="rol" required>
-                        <option value="admin">Admin</option>
-                        <option value="usuario">Usuario</option>
-                    </select>
+                            <option value="admin" <?php echo ($fila['rol'] == 'admin') ? 'selected' : ''; ?>>Admin</option>
+                            <option value="usuario" <?php echo ($fila['rol'] == 'usuario') ? 'selected' : ''; ?>>Usuario</option>
+                        </select>
                     </div>
                     <button type="submit" class="btn btn-primary w-100 mt-4"style=" font-family: 'poppins', sans-serif;
     font-size: 20px;">Actualizar Usuario</button>
@@ -117,8 +118,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
             <i class="fas fa-sign-out-alt btn-icon"></i>
             Cerrar Sesión
         </a>
-    </div>
-</body>
     </div>
 </body>
 </html>

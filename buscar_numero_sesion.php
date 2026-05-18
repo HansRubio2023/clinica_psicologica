@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 include("conexion/conexion.php");
 $con = connection();
 

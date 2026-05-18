@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 session_start();
 
 include("conexion/conexion.php");
@@ -260,9 +260,8 @@ $query = mysqli_query($con, $sql);
                             </label>
                             <select class="form-select" name="asiste">
                                 <option value="Si" <?php echo (isset($_POST['asiste']) && $_POST['asiste'] == 'Si') ? 'selected' : ''; ?>>Sí</option>
-                               
                                 <option value="No" <?php echo (isset($_POST['asiste']) && $_POST['asiste'] == 'No') ? 'selected' : ''; ?>>No</option>
-                                 <option value="Reagendar" <?php echo (isset($_POST['asiste']) && $_POST['asiste'] == 'Reagendar') ? 'selected' : ''; ?>>Reagendar</option>
+                                <option value="Reagendar" <?php echo (isset($_POST['asiste']) && $_POST['asiste'] == 'Reagendar') ? 'selected' : ''; ?>>Reagendar</option>
                             </select>
                         </div>
 
