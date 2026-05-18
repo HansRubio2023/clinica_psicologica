@@ -31,15 +31,13 @@ if ($_SERVER["REQUEST_METHOD"]== "POST"){
         exit;
     }
     else{
-        echo "contraseña incorrecta";
-    
-    
-    
-    
+        header("Location: index.php?error=wrong_password");
+        exit;
     }
     }
     else{
-        echo "usuario incorrecto";
+        header("Location: index.php?error=wrong_user");
+        exit;
     }
 }
   

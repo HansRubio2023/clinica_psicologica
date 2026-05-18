@@ -1,3 +1,10 @@
+<?php
+$error = '';
+if (isset($_GET['error'])) {
+    if ($_GET['error'] === 'wrong_password') $error = 'Contraseña incorrecta.';
+    elseif ($_GET['error'] === 'wrong_user') $error = 'Usuario no encontrado.';
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,6 +25,11 @@
     <div class="clearfix-padding"></div>
     <div class="login-container"style="margin-top: -50px;">
       <h1>Iniciar Sesión</h1>
+      <?php if ($error): ?>
+        <div class="alert alert-danger text-center" role="alert">
+          <i class="fas fa-exclamation-circle me-1"></i><?= $error ?>
+        </div>
+      <?php endif; ?>
       <form id="loginForm" action="login.php" method="POST">
         <div class="input-group">
           <label for="user">Usuario</label>

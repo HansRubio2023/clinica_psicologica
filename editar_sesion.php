@@ -19,10 +19,12 @@ if (isset($_GET['id_sesion'])) {
     // Si el paciente no existe, podrías redirigir
     if (!$row) {
         header("Location: sesiones.php");
+        exit;
     }
 } else {
     // Si se intenta entrar sin ID, redirigimos a la lista
     header("Location: sesiones.php");
+    exit;
 }
 ?>
 

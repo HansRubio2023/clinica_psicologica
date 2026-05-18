@@ -22,10 +22,12 @@ if (isset($_GET['id_paciente'])) {
     // Si el paciente no existe, podrías redirigir
     if (!$row) {
         header("Location: pacientes.php");
+        exit;
     }
 } else {
     // Si se intenta entrar sin ID, redirigimos a la lista
     header("Location: pacientes.php");
+    exit;
 }
 ?>
 
