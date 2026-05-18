@@ -23,6 +23,7 @@ $query = mysqli_query($con, $sql);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/css/tom-select.bootstrap5.min.css" rel="stylesheet">
 
     <style>
         .flatpickr-day.feriado {
@@ -133,7 +134,6 @@ $query = mysqli_query($con, $sql);
                                        value="<?php echo isset($_POST['apellido']) ? $_POST['apellido'] : ''; ?>"
                                        maxlength="50" required>
                             </div>
-
                         <!-- Tipo Atención -->
                         <div class="col-9 mb-3">
                             <label class="form-label fw-bold">
@@ -150,32 +150,23 @@ $query = mysqli_query($con, $sql);
                             <label class="form-label fw-bold">
                                 <i class="fas fa-user-tag text-primary"></i> Derivación *
                             </label>
-                            <select class="form-select" name="id_derivacion" id="selectDerivacion" required>
+
+                            <select name="id_derivacion" id="selectDerivacion" required>
                                 <option value="">-- Seleccione --</option>
                                 <?php
-                                    $sql_der = "SELECT * FROM tipo_derivacion";
-                                    $query_der = mysqli_query($con, $sql_der);
-                                    while($der = mysqli_fetch_assoc($query_der)) {
-                                        echo "<option value='{$der['id_derivacion']}'>{$der['nombre_institucion_derivacion']}</option>";
-                                    }
+                                $sql_der = "SELECT * FROM tipo_derivacion";
+                                $query_der = mysqli_query($con, $sql_der);
+                                while ($der = mysqli_fetch_assoc($query_der)) {
+                                    echo "<option value='{$der['id_derivacion']}'>{$der['nombre_institucion_derivacion']}</option>";
+                                }
                                 ?>
-                                <option value="nueva">+ Agregar nueva derivacion</option>
+                                <option value="nueva">+ Agregar nueva derivación</option>
                             </select>
+
                             <input type="text" class="form-control mt-2 d-none" id="nuevaDerivacion"
                                 name="nueva_derivacion" placeholder="Nueva derivación" maxlength="200">
                         </div>
-                        <script>
-                            document.getElementById('selectDerivacion').addEventListener('change', function() {
-                                const nuevaDerivacionInput = document.getElementById('nuevaDerivacion');
-                                if (this.value === 'nueva') {
-                                    nuevaDerivacionInput.classList.remove('d-none');
-                                    nuevaDerivacionInput.setAttribute('required', 'required');
-                                } else {
-                                    nuevaDerivacionInput.classList.add('d-none');
-                                    nuevaDerivacionInput.removeAttribute('required');
-                                }
-                            });
-                        </script>
+
 
                         <!-- Comentarios -->
                         <div class="mb-3">
@@ -249,6 +240,24 @@ $query = mysqli_query($con, $sql);
     </form>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
+    <script>
+        new TomSelect('#selectDerivacion', {
+            create: false,
+            maxOptions: false,
+            sortField: { field: 'text', direction: 'asc' },
+            onChange: function(value) {
+                const input = document.getElementById('nuevaDerivacion');
+                if (value === 'nueva') {
+                    input.classList.remove('d-none');
+                    input.setAttribute('required', 'required');
+                } else {
+                    input.classList.add('d-none');
+                    input.removeAttribute('required');
+                }
+            }
+        });
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
     <script>
